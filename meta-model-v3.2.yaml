@@ -1,0 +1,115 @@
+maskot:
+  id: "Maskot-ρ"            # codename; ρ = role
+  version: "v3.2"
+  normative_mapping: |
+    maskot ≡ ⟨holder: U.System, role: TransformerRole ⊑ Role,
+    assignment: U.RoleAssignment: Context, enacts: U.Method via U.MethodDescription,
+    yields: U.Work, ability: U.Capability {envelope, measures, validity}⟩
+
+  holder:
+    system_name: "<TBD>"
+    bounded_context: "<TBD>"     # adult-learning for working SEs by default
+    scenes_apps:                 # recurring places of action
+      - name: "<scene/app>"      # e.g., stand-up, PR review, habit tracker
+        context_card: true
+        carriers: ["evidence", "bridge", "gate", "badge"]
+
+  role:
+    name: "<TransformerRole name>"
+    purpose: "Cause specified transformations and retain ability to do so again"
+    allowed_actions: ["draw_boundary","assign_badge","toggle_gate","stamp_evidence","author_bridge"]
+    prohibited_actions: ["act_as_episteme","self_measure"]
+
+  methods:                      # meme-driven; one entry per selected meme
+    - id: "<method_id>"
+      meme_ref: "<Memes.md path or id>"
+      name: "<Method name>"
+      inputs: ["<input_type>"]  # doc draft, task list, claim, etc.
+      steps: ["<key_step_1>", "<key_step_2>", "<key_step_3>"]
+      outputs:
+        work_type: "<ContextCard|BadgeStamp|TwoLaneCard|TwoBoxVerdict|EvidenceTicket|BridgeChip|Custom>"
+        fields: ["context","role","method_description","work_ref","timestamp"]
+      scenes: ["<scene/app>"]
+      captions: ["<<=48 chars>"]
+      voice_lines: ["<<=3s read>"]
+
+  work_catalog:                  # canonical artefacts
+    - name: "ContextCard"
+      purpose: "Declare room of meaning"
+    - name: "BadgeStamp"
+      purpose: "Role assignment confirmation"
+    - name: "TwoLaneCard"
+      purpose: "Plan≠Run separation"
+    - name: "TwoBoxVerdict"
+      purpose: "Service vs Capability triage"
+    - name: "EvidenceTicket"
+      purpose: "Anchor claim to carrier/time/polarity"
+    - name: "BridgeChip"
+      purpose: "Alignment + reuse record"
+
+  capability:
+    envelope:
+      throughput_per_period: "<TBD>"      # assets/week
+      max_concurrent_scenes: "<TBD>"
+      latency_targets: "<TBD>"            # idea→asset
+      export_formats: ["PNG","SVG","MP4","GIF"]
+      resource_budgets: "<TBD>"           # Avail_B(q*)
+    measures:
+      - name: "gate_pass_rate"
+        unit: "%"
+      - name: "evidence_attach_rate"
+        unit: "%"
+      - name: "bridge_reuse_count"
+        unit: "count"
+      - name: "adoption_in_scene"
+        unit: "count"
+    validity_window:
+      starts: "<ISO8601>"
+      ends: "<ISO8601|rolling>"
+      refresh_cadence: "<TBD>"
+      conformance_mode: "<M-0|M-1|M-2|M-3>"   # formal maturity mode
+
+  media_grammar:
+    invariants:
+      symbols: ["boundary_ring","role_badge","green_gate","bridge_tile","evidence_stamp"]
+      labeling: ["Context","Role","MethodDescription","Work"]  # distinct chips
+    variable_slots:
+      badge_icon: "<per-role>"
+      card_color: "<per-context>"
+      micro_prop: "<per-scene>"
+    palette:
+      primary: "<HEX>"
+      info: "<HEX>"
+      approve: "<HEX>"
+      warn: "<HEX>"
+      block: "<HEX>"
+      contrast: ">= WCAG AA"
+    poses:
+      count: "<8–12>"
+      library_examples: ["Point-the-Boundary","Badge-On","Green-Gate","Blocked","Bridge-Build","Evidence-Stamp","Plan/Run Split","Service≠Capability","Observe","Assemble-Γ","Context-Card Hold","Handoff"]
+    gesture_signals: ["boundary_sweep","badge_flip","check_tick","gate_toggle","bridge_click"]
+    motion_loops:
+      duration_hint_s: "2–3"
+      types: ["Boundary Sweep","Badge Flip","Gate Pulse","Bridge Snap"]
+    camera_framing: ["hero_medium","over-the-shoulder_to_card","top-down_desk"]
+    background_style: ["clean_grid","blueprint_lines","sticky_note_cards"]
+    captions_templates: ["Boundary first. Then act.","Badge → Gate → Go.","Service ≠ Capability.","Plan ≠ Run. Keep both.","Bridge it, or don’t mix.","Evidence wears a date."]
+    voice_lines_examples: ["Draw the room.","Wear the right badge.","Green gate? Proceed.","Recipe here, run there.","Promise out, ability in."]
+    audio_cues: ["ring_draw_whoosh","badge_flip_clack","gate_tri_tone","bridge_click"]
+    export:
+      aspect_ratios: ["9:16","1:1","16:9"]
+      base_resolution: ">=1080"
+      stills: "PNG"
+      vectors: "SVG"
+      loops: ["MP4/H.264","GIF<=3s"]
+      alt_text_rule: "Describe pose+action plainly"
+
+  guardrails:
+    do: ["show Context on cards","keep labels distinct","use high contrast"]
+    dont: ["anthropomorphize documents","use vendor logos","mix plan with run"]
+    principles: ["only systems act","measurement is external","no self-action"]
+
+  data:
+    memes_source: "Memes.md"
+    meme_selection_rule: "<popularity|coverage|theme>"
+    notes: "Memes often stress gradual progress, self-discipline, systematic practice; parameterize methods accordingly."

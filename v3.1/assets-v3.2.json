@@ -1,0 +1,35 @@
+[
+  {
+    "id": "A1",
+    "meme_id": "M1_internal_motivation",
+    "scene": "reflection_dashboard",
+    "pose": "Point-the-Boundary",
+    "loop": "Boundary Sweep",
+    "caption": "Find your why.",
+    "VO": "Look inward first.",
+    "audio_cue": "ring_draw_whoosh",
+    "export": "MP4 16:9 1080p"
+  },
+  {
+    "id": "A2",
+    "meme_id": "M2_gradual_progress",
+    "scene": "habit_tracker",
+    "pose": "Evidence-Stamp",
+    "loop": "Gate Pulse",
+    "caption": "Small steps stack.",
+    "VO": "Record each step.",
+    "audio_cue": "gate_tri_tone",
+    "export": "GIF 1:1 ≤3s"
+  },
+  {
+    "id": "A3",
+    "meme_id": "M3_constructive_error",
+    "scene": "retrospective",
+    "pose": "Bridge-Build",
+    "loop": "Bridge Snap",
+    "caption": "Error → bridge.",
+    "VO": "Turn fail to link.",
+    "audio_cue": "bridge_click",
+    "export": "MP4 16:9 1080p"
+  }
+]
