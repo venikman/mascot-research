@@ -1,0 +1,661 @@
+{
+  "$meta": {
+    "title": "Production Spec JSON — Field Semantics",
+    "version": "1.0",
+    "description": "Data dictionary mapping each schema field to its meaning, type, requirement, constraints, and examples.",
+    "sources": [
+      { "path": "/mnt/data/Memes.md", "citation": ":contentReference[oaicite:0]{index=0}" },
+      { "path": "/mnt/data/q-a-3.2.md", "citation": ":contentReference[oaicite:1]{index=1}" }
+    ]
+  },
+  "fields": [
+    {
+      "path": "system",
+      "type": "object",
+      "required": true,
+      "meaning": "Declares who can act (the System via a Holder), the role label, and the non-acting episteme that constrains production.",
+      "children": ["system.holder", "system.role", "system.episteme"]
+    },
+    {
+      "path": "system.holder",
+      "type": "object",
+      "required": true,
+      "meaning": "Concrete production rig/toolchain that renders panels and clips.",
+      "children": ["system.holder.name", "system.holder.type", "system.holder.layers", "system.holder.controls", "system.holder.canvas"]
+    },
+    {
+      "path": "system.holder.name",
+      "type": "string",
+      "required": true,
+      "meaning": "Human-readable identifier of the rig instance.",
+      "example": "Stepper Rig v1.0"
+    },
+    {
+      "path": "system.holder.type",
+      "type": "string",
+      "required": true,
+      "meaning": "Short description of what the rig is capable of.",
+      "example": "2.5D vector puppet + caption overlay toolchain"
+    },
+    {
+      "path": "system.holder.layers",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Ordered layer names for deterministic composition.",
+      "example": ["bg", "grid", "stepper_body", "arms", "face_progressbar", "eyes", "mouth", "props", "caption", "watermark"]
+    },
+    {
+      "path": "system.holder.controls",
+      "type": "object",
+      "required": false,
+      "meaning": "Exposed knobs at render time (e.g., expressions, progress states, accent). Keys should be snake_case.",
+      "example": { "progress_bar_pct": [0, 25, 50, 75, 100], "eye": ["open", "half", "closed", "side"] }
+    },
+    {
+      "path": "system.holder.canvas",
+      "type": "object",
+      "required": true,
+      "meaning": "Viewport definitions and safe area rules.",
+      "children": ["system.holder.canvas.ratios", "system.holder.canvas.base_px", "system.holder.canvas.safe_inset_pct"]
+    },
+    {
+      "path": "system.holder.canvas.ratios",
+      "type": "array<enum>",
+      "required": true,
+      "meaning": "Allowed aspect ratios for outputs.",
+      "allowed": ["1:1", "9:16", "16:9"],
+      "example": ["1:1", "9:16"]
+    },
+    {
+      "path": "system.holder.canvas.base_px",
+      "type": "object",
+      "required": true,
+      "meaning": "Canonical pixel dimensions per ratio for deterministic layout.",
+      "children": ["system.holder.canvas.base_px.square", "system.holder.canvas.base_px.vertical", "system.holder.canvas.base_px.horizontal"]
+    },
+    {
+      "path": "system.holder.canvas.base_px.square",
+      "type": "array<int,2>",
+      "required": true,
+      "meaning": "Width and height for 1:1 outputs.",
+      "example": [1080, 1080]
+    },
+    {
+      "path": "system.holder.canvas.base_px.vertical",
+      "type": "array<int,2>",
+      "required": true,
+      "meaning": "Width and height for 9:16 outputs.",
+      "example": [1080, 1920]
+    },
+    {
+      "path": "system.holder.canvas.base_px.horizontal",
+      "type": "array<int,2>",
+      "required": true,
+      "meaning": "Width and height for 16:9 outputs.",
+      "example": [1920, 1080]
+    },
+    {
+      "path": "system.holder.canvas.safe_inset_pct",
+      "type": "number",
+      "required": true,
+      "meaning": "Global safe-area inset percent to avoid platform UI occlusion.",
+      "range": [0, 100],
+      "example": 5
+    },
+    {
+      "path": "system.role",
+      "type": "object",
+      "required": true,
+      "meaning": "Role label and scope in which the Holder acts.",
+      "children": ["system.role.name", "system.role.context", "system.role.authority", "system.role.prohibitions"]
+    },
+    {
+      "path": "system.role.name",
+      "type": "string",
+      "required": true,
+      "meaning": "Must begin with 'TransformerRole:' to declare a job label, not a tool.",
+      "pattern": "^TransformerRole:.+",
+      "example": "TransformerRole:Habit-Meme Transformer"
+    },
+    {
+      "path": "system.role.context",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Scenes where the role applies (Target × Boundary × Scenes).",
+      "example": ["study", "workday planning", "personal development"],
+      "notes": "Context derived from Q-A v3.2 scenes. :contentReference[oaicite:2]{index=2}"
+    },
+    {
+      "path": "system.role.authority",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Allowed actions for the Holder.",
+      "example": ["compose panels", "animate beats", "overlay captions", "export assets"]
+    },
+    {
+      "path": "system.role.prohibitions",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Forbidden actions or claims.",
+      "example": ["no claims beyond episteme", "no internal motivation claims"]
+    },
+    {
+      "path": "system.episteme",
+      "type": "object",
+      "required": true,
+      "meaning": "Non-acting documents that constrain tone and allowed transformations.",
+      "children": ["system.episteme.sources", "system.episteme.non_acting"]
+    },
+    {
+      "path": "system.episteme.sources",
+      "type": "array<object>",
+      "required": true,
+      "meaning": "File references that inform but never act.",
+      "must_include": ["/mnt/data/Memes.md", "/mnt/data/q-a-3.2.md"],
+      "notes": "Episteme never acts; it constrains. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4}",
+      "example": [{ "path": "/mnt/data/Memes.md" }, { "path": "/mnt/data/q-a-3.2.md" }]
+    },
+    {
+      "path": "system.episteme.non_acting",
+      "type": "boolean",
+      "required": true,
+      "meaning": "Must be true to enforce 'episteme never acts.'",
+      "example": true
+    },
+    {
+      "path": "style",
+      "type": "object",
+      "required": true,
+      "meaning": "Look-and-feel rules for reproducible visuals.",
+      "children": ["style.palette", "style.typography", "style.layout"]
+    },
+    {
+      "path": "style.palette",
+      "type": "object<string,color>",
+      "required": true,
+      "meaning": "Project color tokens used by engines instead of hardcoded colors.",
+      "example": { "bg": "#FFFFFF", "line": "#111111", "accent_indigo": "#4F46E5", "progress_green": "#22C55E" }
+    },
+    {
+      "path": "style.typography",
+      "type": "object",
+      "required": true,
+      "meaning": "Typography canon for captions and body text.",
+      "children": ["style.typography.caption_font", "style.typography.body_font", "style.typography.caption_rules"]
+    },
+    {
+      "path": "style.typography.caption_font",
+      "type": "string",
+      "required": true,
+      "meaning": "Primary font used for captions.",
+      "example": "Inter Black"
+    },
+    {
+      "path": "style.typography.body_font",
+      "type": "string",
+      "required": true,
+      "meaning": "Secondary font for longer text blocks.",
+      "example": "Inter Medium"
+    },
+    {
+      "path": "style.typography.caption_rules",
+      "type": "object",
+      "required": true,
+      "meaning": "Brevity and structure rules for captions to match meme style. :contentReference[oaicite:5]{index=5}",
+      "children": [
+        "style.typography.caption_rules.max_lines",
+        "style.typography.caption_rules.max_chars_per_line",
+        "style.typography.caption_rules.min_words",
+        "style.typography.caption_rules.max_words",
+        "style.typography.caption_rules.forbid",
+        "style.typography.caption_rules.prefer"
+      ]
+    },
+    {
+      "path": "style.typography.caption_rules.max_lines",
+      "type": "integer",
+      "required": true,
+      "meaning": "Max number of caption lines.",
+      "range": [1, 2],
+      "example": 2
+    },
+    {
+      "path": "style.typography.caption_rules.max_chars_per_line",
+      "type": "integer",
+      "required": true,
+      "meaning": "Max characters per line to avoid wrap instability.",
+      "example": 38
+    },
+    {
+      "path": "style.typography.caption_rules.min_words",
+      "type": "integer",
+      "required": true,
+      "meaning": "Minimum words in a caption.",
+      "example": 3
+    },
+    {
+      "path": "style.typography.caption_rules.max_words",
+      "type": "integer",
+      "required": true,
+      "meaning": "Maximum words in a caption.",
+      "example": 7
+    },
+    {
+      "path": "style.typography.caption_rules.forbid",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Characters or tokens that captions must not use.",
+      "example": ["!"]
+    },
+    {
+      "path": "style.typography.caption_rules.prefer",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Heuristics writers should follow.",
+      "example": ["verbs", "numbers", "units_SI"]
+    },
+    {
+      "path": "style.layout",
+      "type": "object",
+      "required": true,
+      "meaning": "Grid, gutters, and watermark rules for consistent placement.",
+      "children": [
+        "style.layout.grid_cols",
+        "style.layout.col_gutter_px",
+        "style.layout.caption_block_cols",
+        "style.layout.watermark_pos",
+        "style.layout.watermark_opacity"
+      ]
+    },
+    {
+      "path": "style.layout.grid_cols",
+      "type": "integer",
+      "required": true,
+      "meaning": "Number of columns in the internal grid.",
+      "example": 12
+    },
+    {
+      "path": "style.layout.col_gutter_px",
+      "type": "integer",
+      "required": true,
+      "meaning": "Column gutter width in pixels at base canvas.",
+      "example": 24
+    },
+    {
+      "path": "style.layout.caption_block_cols",
+      "type": "array<int,2>",
+      "required": true,
+      "meaning": "Start and end column for the caption block.",
+      "example": [1, 7]
+    },
+    {
+      "path": "style.layout.watermark_pos",
+      "type": "enum",
+      "required": true,
+      "meaning": "Watermark position.",
+      "allowed": ["bottom_right", "bottom_left", "top_right", "top_left"],
+      "example": "bottom_right"
+    },
+    {
+      "path": "style.layout.watermark_opacity",
+      "type": "number",
+      "required": true,
+      "meaning": "Watermark opacity between 0 and 1.",
+      "range": [0, 1],
+      "example": 0.4
+    },
+    {
+      "path": "templates",
+      "type": "array<object>",
+      "required": true,
+      "meaning": "Library of repeatable meme templates mapping patterns to panels/beats.",
+      "notes": "Tie templates to useful meme IDs for traceability. :contentReference[oaicite:6]{index=6}"
+    },
+    {
+      "path": "templates[].id",
+      "type": "string",
+      "required": true,
+      "meaning": "Short code for the template.",
+      "pattern": "^T-[A-Z]{2,3}$",
+      "example": "T-MS"
+    },
+    {
+      "path": "templates[].name",
+      "type": "string",
+      "required": true,
+      "meaning": "Human-readable template name.",
+      "example": "Micro-Steps"
+    },
+    {
+      "path": "templates[].source_refs",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Links to useful meme IDs grounding the mechanic.",
+      "example": ["useful_meme_058"],
+      "notes": "Examples include 113, 68, 21, 18, 58, 31, 111, 106/129, 15. :contentReference[oaicite:7]{index=7}"
+    },
+    {
+      "path": "templates[].panels",
+      "type": "integer",
+      "required": true,
+      "meaning": "Intended narrative panel count for stills/carousels.",
+      "range": [1, 8],
+      "example": 3
+    },
+    {
+      "path": "templates[].beats",
+      "type": "array<object>",
+      "required": true,
+      "meaning": "Time-ordered beats that drive animation or still sampling.",
+      "variants": ["progress_beat", "prop_beat"]
+    },
+    {
+      "path": "templates[].beats[].t",
+      "type": "number",
+      "required": true,
+      "meaning": "Time in seconds from template start for this beat.",
+      "example": 1.6
+    },
+    {
+      "path": "templates[].beats[].progress_bar_pct",
+      "type": "enum<int>",
+      "required": "conditional",
+      "meaning": "Progress bar state for progress beats.",
+      "allowed": [0, 25, 50, 75, 100],
+      "example": 50
+    },
+    {
+      "path": "templates[].beats[].prop",
+      "type": "string",
+      "required": "conditional",
+      "meaning": "Rig token to display/use for prop beats.",
+      "example": "sticky_1of3"
+    },
+    {
+      "path": "templates[].beats[].caption",
+      "type": "string",
+      "required": false,
+      "meaning": "Short overlay caption that must obey caption_rules.",
+      "example": "Review Week 2"
+    },
+    {
+      "path": "templates[].beats[].body_text",
+      "type": "string",
+      "required": false,
+      "meaning": "Optional multi-line text for rule cards.",
+      "example": "If calendar slips, schedule review, not tasks."
+    },
+    {
+      "path": "render_rules",
+      "type": "object",
+      "required": true,
+      "meaning": "Hard numeric rules that stabilize visuals across engines.",
+      "children": [
+        "render_rules.stroke_px",
+        "render_rules.shadow_px",
+        "render_rules.progress_bar_height_px",
+        "render_rules.icon_size_px",
+        "render_rules.safe_inset_pct",
+        "render_rules.contrast_min_WCAG_Lc"
+      ]
+    },
+    {
+      "path": "render_rules.stroke_px",
+      "type": "integer",
+      "required": true,
+      "meaning": "Outline thickness at base canvas.",
+      "example": 8
+    },
+    {
+      "path": "render_rules.shadow_px",
+      "type": "integer",
+      "required": true,
+      "meaning": "Shadow blur radius at base canvas.",
+      "example": 12
+    },
+    {
+      "path": "render_rules.progress_bar_height_px",
+      "type": "integer",
+      "required": true,
+      "meaning": "Height of progress bar in pixels.",
+      "example": 40
+    },
+    {
+      "path": "render_rules.icon_size_px",
+      "type": "integer",
+      "required": true,
+      "meaning": "Nominal icon/token size in pixels.",
+      "example": 96
+    },
+    {
+      "path": "render_rules.safe_inset_pct",
+      "type": "number",
+      "required": true,
+      "meaning": "Restates safe inset for quick engine access.",
+      "example": 5
+    },
+    {
+      "path": "render_rules.contrast_min_WCAG_Lc",
+      "type": "number",
+      "required": true,
+      "meaning": "Minimum APCA contrast target for captions/icons.",
+      "example": 60
+    },
+    {
+      "path": "export",
+      "type": "object",
+      "required": true,
+      "meaning": "Default export profiles and file naming.",
+      "children": ["export.image", "export.video", "export.file_naming"]
+    },
+    {
+      "path": "export.image",
+      "type": "object",
+      "required": true,
+      "meaning": "Rules for still image outputs.",
+      "children": ["export.image.format", "export.image.profile", "export.image.max_kB"]
+    },
+    {
+      "path": "export.image.format",
+      "type": "const",
+      "required": true,
+      "meaning": "Image file format.",
+      "allowed": ["PNG"],
+      "example": "PNG"
+    },
+    {
+      "path": "export.image.profile",
+      "type": "const",
+      "required": true,
+      "meaning": "Color profile for images.",
+      "allowed": ["sRGB"],
+      "example": "sRGB"
+    },
+    {
+      "path": "export.image.max_kB",
+      "type": "integer",
+      "required": true,
+      "meaning": "Max file size budget for stills.",
+      "example": 400
+    },
+    {
+      "path": "export.video",
+      "type": "object",
+      "required": true,
+      "meaning": "Rules for motion outputs.",
+      "children": ["export.video.format", "export.video.codec", "export.video.fps", "export.video.bitrate_Mbps", "export.video.max_MB"]
+    },
+    {
+      "path": "export.video.format",
+      "type": "const",
+      "required": true,
+      "meaning": "Video container format.",
+      "allowed": ["MP4"],
+      "example": "MP4"
+    },
+    {
+      "path": "export.video.codec",
+      "type": "const",
+      "required": true,
+      "meaning": "Video codec.",
+      "allowed": ["H.264"],
+      "example": "H.264"
+    },
+    {
+      "path": "export.video.fps",
+      "type": "integer",
+      "required": true,
+      "meaning": "Frames per second.",
+      "allowed": [24, 25, 30],
+      "example": 24
+    },
+    {
+      "path": "export.video.bitrate_Mbps",
+      "type": "number",
+      "required": true,
+      "meaning": "Target bitrate in megabits per second.",
+      "example": 4
+    },
+    {
+      "path": "export.video.max_MB",
+      "type": "integer",
+      "required": true,
+      "meaning": "Max output file size for motion exports.",
+      "example": 8
+    },
+    {
+      "path": "export.file_naming",
+      "type": "string",
+      "required": true,
+      "meaning": "Filename pattern for reproducibility and tracking.",
+      "example": "YYYYMMDD_T-MS_small-parts-done_take01.png"
+    },
+    {
+      "path": "prompt_templates",
+      "type": "object",
+      "required": false,
+      "meaning": "Prompt canon for image generation to avoid aesthetic drift.",
+      "children": ["prompt_templates.image_generator_prompt", "prompt_templates.negative_terms"]
+    },
+    {
+      "path": "prompt_templates.image_generator_prompt",
+      "type": "string",
+      "required": true,
+      "meaning": "Declarative description of the mascot/rig visual style.",
+      "example": "Flat 2D icon of a small square robot with a progress-bar face, thick outline, white background, accent indigo and green."
+    },
+    {
+      "path": "prompt_templates.negative_terms",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Exclusion terms to keep generations on-style.",
+      "example": ["photorealistic", "busy background", "glossy 3D"]
+    },
+    {
+      "path": "assumptions",
+      "type": "array<string>",
+      "required": false,
+      "meaning": "Context assumptions (audience, scenes) to prevent drift.",
+      "notes": "Grounded in Target × Boundary × Scenes. :contentReference[oaicite:8]{index=8}",
+      "example": ["Viewers are early-stage systems-thinking practitioners."]
+    },
+    {
+      "path": "model",
+      "type": "object",
+      "required": false,
+      "meaning": "Causal hypotheses and units for interpreting metrics.",
+      "example": { "causal": "Visible next step increases enactment probability.", "units": { "time": "s", "size": "px" } }
+    },
+    {
+      "path": "options",
+      "type": "array<string>",
+      "required": false,
+      "meaning": "Supported output modes.",
+      "example": ["1: Single-panel stills", "2: Micro-animations", "3: Carousels"]
+    },
+    {
+      "path": "pick",
+      "type": "string",
+      "required": false,
+      "meaning": "Default option from `options` when not overridden.",
+      "example": "2: Micro-animations"
+    },
+    {
+      "path": "work_examples",
+      "type": "array<object>",
+      "required": true,
+      "meaning": "Deterministic fixtures used in CI and onboarding.",
+      "notes": "At least one example should link to a determinism test."
+    },
+    {
+      "path": "work_examples[].id",
+      "type": "string",
+      "required": true,
+      "meaning": "Fixture ID.",
+      "example": "W1"
+    },
+    {
+      "path": "work_examples[].template",
+      "type": "string",
+      "required": true,
+      "meaning": "Template code this example instantiates.",
+      "example": "T-MS"
+    },
+    {
+      "path": "work_examples[].canvas",
+      "type": "string",
+      "required": false,
+      "meaning": "Base canvas size as WIDTHxHEIGHT.",
+      "example": "1080x1080"
+    },
+    {
+      "path": "work_examples[].duration_s",
+      "type": "number",
+      "required": false,
+      "meaning": "Clip duration in seconds for motion fixtures.",
+      "example": 5.0
+    },
+    {
+      "path": "work_examples[].layers_hash",
+      "type": "string",
+      "required": false,
+      "meaning": "Hash of flattened layer graph to detect rig drift.",
+      "example": "sha256:stub-w1"
+    },
+    {
+      "path": "work_examples[].caption",
+      "type": "string",
+      "required": false,
+      "meaning": "Actual caption used in the fixture (must obey caption_rules).",
+      "example": "Small Parts, Done"
+    },
+    {
+      "path": "work_examples[].expected_files",
+      "type": "array<string>",
+      "required": true,
+      "meaning": "Expected output filenames for deterministic builds.",
+      "example": ["20251012_T-MS_small-parts-done_take01.png"]
+    }
+  ],
+  "cross_field_rules": [
+    {
+      "rule": "system.episteme.non_acting must be true.",
+      "why": "Episteme (Memes.md, Q-A) constrains but never acts.",
+      "citations": [":contentReference[oaicite:10]{index=10}"]
+    },
+    {
+      "rule": "templates[].source_refs must reference useful meme IDs.",
+      "why": "Grounds each template in canonical habit mechanics.",
+      "citations": [":contentReference[oaicite:11]{index=11}"]
+    },
+    {
+      "rule": "Captions in templates[].beats[].caption must obey style.typography.caption_rules.",
+      "why": "Keeps meme overlays short and reproducible.",
+      "citations": [":contentReference[oaicite:12]{index=12}"]
+    },
+    {
+      "rule": "If any beat includes body_text, export.image must be configured.",
+      "why": "Rich text cards require still export compatibility."
+    }
+  ]
+}
