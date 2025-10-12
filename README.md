@@ -1,6 +1,5 @@
 # 1 STEP
 ## Files 
-- `meta-model.json`
 - `Memes.md`
 - `q-a.md`
 ## Prompt
@@ -31,7 +30,9 @@ From the two inputs, produce:
 
 ## Prompt:
 ```
-Using spec of our mascot, create prompt for image  where our mascot will replicate meme: <MEME to generate>, provide 4 versions on prompts
+Using the spec of our mascot, create a prompt for an image  where our mascot will replicate a meme: <MEME>.
+Generate your version of meme. 
+And provide 4 versions of the prompts. 
 ```
 
 Run it.

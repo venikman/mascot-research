@@ -1,200 +1,182 @@
 {
-  "system": {
-    "holder": {
-      "name": "Stepper Rig v1.0",
-      "type": "2.5D vector puppet + caption overlay toolchain",
-      "layers": ["bg", "grid", "stepper_body", "arms", "face_progressbar", "eyes", "mouth", "props", "caption", "watermark"],
-      "controls": {
-        "progress_bar_pct": [0, 25, 50, 75, 100],
-        "eye": ["open", "half", "closed", "side"],
-        "mouth": ["flat", "smile", "think", "determined"],
-        "accent_color": ["#4F46E5", "#22C55E", "#EF4444"]
-      },
-      "canvas": {
-        "ratios": ["1:1", "9:16", "16:9"],
-        "base_px": { "square": [1080,1080], "vertical": [1080,1920], "horizontal": [1920,1080] },
-        "safe_inset_pct": 5
+  "spec_version": "1.0.0",
+  "holder": {
+    "id": "holder.deltabit.rig.v1",
+    "name": "Δbit Holder",
+    "type": "2D-vector-rig",
+    "acts": true,
+    "files": {
+      "rig_svg": "assets/rig/deltabit_v1.svg",
+      "pose_symbols": "assets/rig/deltabit_symbols.svg",
+      "props_svg": "assets/rig/props_v1.svg"
+    }
+  },
+  "role_assignment": {
+    "role": "TransformerRole.MemePanelizer",
+    "context": {
+      "label": "IG+Reels Q4-2025",
+      "time_window": {"start": "2025-10-12", "end": "2026-01-12"},
+      "scenes": ["workday", "self-management", "adult-learning"]
+    },
+    "authority": ["compose_layout", "select_pose", "place_caption", "color_within_palette"],
+    "prohibitions": ["invent_doctrine", "promise_outcomes", "animate_episteme"]
+  },
+  "inputs": {
+    "memes_doc": "Memes.md",
+    "qa_doc": "q-a-3.2.md",
+    "notes": "Epistemes inform but never act."
+  },
+  "outputs": {
+    "image_post": {"format": "png", "size_px": [1080,1350], "mm_at_96dpi": [285.75,357.1875]},
+    "story_video": {"format": "mp4", "size_px": [1080,1920], "mm_at_96dpi": [285.75,508.0], "fps": 24, "dur_s": [5,8]},
+    "carousel": {"count": [3,5], "size_each_px": [1080,1350]}
+  },
+  "palette": {
+    "ink": "#111111",
+    "paper": "#FFFFFF",
+    "accentA": "#FF6A00",
+    "accentB": "#3178C6",
+    "calm": "#10B981",
+    "warn": "#D61F1F"
+  },
+  "typography": {
+    "family": ["Inter", "Noto Sans"],
+    "weights": ["Regular", "Bold"],
+    "min_font_px": 28,
+    "max_words_hook": 7,
+    "max_words_body": 14,
+    "contrast_min": 4.5
+  },
+  "layout_templates": {
+    "IG_portrait_1080x1350": {
+      "size_px": [1080,1350],
+      "safe_area_px": {"top": 80, "bottom": 80, "left": 64, "right": 64},
+      "grid_px": 16,
+      "text_zones": {
+        "hook_top": {"y": [80, 220]},
+        "body_bottom": {"y": [1130, 1270]}
       }
     },
-    "role": {
-      "name": "TransformerRole:Habit-Meme Transformer",
-      "context": ["study", "workday planning", "personal development"],
-      "authority": ["compose panels", "animate beats", "overlay captions", "export assets"],
-      "prohibitions": ["no claims beyond episteme", "no acting by docs themselves"]
-    },
-    "episteme": {
-      "sources": [
-        {"path": "/mnt/data/Memes.md", "note": "Top 'useful' meme patterns guiding behaviors"},
-        {"path": "/mnt/data/q-a-3.2.md", "note": "Target, boundary, scenes matrix"}
-      ],
-      "non_acting": true
+    "Story_1080x1920": {
+      "size_px": [1080,1920],
+      "safe_area_px": {"top": 120, "bottom": 160, "left": 64, "right": 64},
+      "grid_px": 16
     }
   },
-  "style": {
-    "palette": {
-      "bg": "#FFFFFF",
-      "line": "#111111",
-      "accent_indigo": "#4F46E5",
-      "progress_green": "#22C55E",
-      "danger_red": "#EF4444",
-      "shadow": "rgba(0,0,0,0.2)"
-    },
-    "typography": {
-      "caption_font": "Inter Black",
-      "body_font": "Inter Medium",
-      "caption_rules": {
-        "max_lines": 2,
-        "max_chars_per_line": 38,
-        "min_words": 3,
-        "max_words": 7,
-        "forbid": ["!"],
-        "prefer": ["verbs", "numbers", "units_SI"]
-      }
-    },
-    "layout": {
-      "grid_cols": 12,
-      "col_gutter_px": 24,
-      "caption_block_cols": [1,7],
-      "watermark_pos": "bottom_right",
-      "watermark_opacity": 0.4
-    }
+  "pose_library": [
+    "neutral","think","aha","wince","shrug","focus","strain","calm",
+    "point","hold_card","carry_brick","climb_step","check_box","cut_arrow",
+    "open_book","sweep_noise","sit_meditate","type_log"
+  ],
+  "base_formats": {
+    "REFLECT": {"panels": 3, "beats": ["before","mirror","delta"], "gestures": ["think","aha"]},
+    "STEPS": {"panels": 3, "beats": ["path","step","tick"], "gestures": ["carry_brick","climb_step"]},
+    "CHECKLOOP": {"panels": 3, "beats": ["list","check","streak"], "gestures": ["check_box"]},
+    "Z-DEBUG": {"panels": 3, "beats": ["mask","verify","fade"], "gestures": ["point","stamp"]},
+    "TEMPLATE": {"panels": 3, "beats": ["blank","fill","overview"], "gestures": ["hold_card"]},
+    "MONK-FOCUS": {"panels": 3, "beats": ["cone","timer","page+1"], "gestures": ["sit_meditate"]},
+    "DECOMPOSE": {"panels": 3, "beats": ["object","explode","label"], "gestures": ["point"]},
+    "DIGI-MIN": {"panels": 3, "beats": ["noise","route","signal"], "gestures": ["sweep_noise"]},
+    "DEEP-READ": {"panels": 3, "beats": ["open","page+1","thought"], "gestures": ["open_book"]},
+    "GIT-MUTATE": {"panels": 3, "beats": ["commit1","commit2","diff"], "gestures": ["type_log"]}
   },
-  "templates": [
+  "meme_templates": [
+    {"id": "m1", "name": "Reflective Intrinsic Motivation Shift", "format": "REFLECT", "hook": "Swap pressure for curiosity.", "variables": ["topic"]},
+    {"id": "m2", "name": "Incremental Progress Reflection", "format": "REFLECT", "hook": "Log the micro‑win.", "variables": ["micro_win"]},
+    {"id": "m3", "name": "Exorcising Zombie Ideas", "format": "Z-DEBUG", "hook": "Test ideas. Not vibes.", "variables": ["idea_to_test"]},
+    {"id": "m4", "name": "Growth Through Error Reflection", "format": "REFLECT", "hook": "Mistake → method.", "variables": ["rule"]},
+    {"id": "m5", "name": "Consistent Practice Builds Mastery", "format": "STEPS", "hook": "One brick today.", "variables": []},
+    {"id": "m6", "name": "Persistence Pays Off", "format": "STEPS", "hook": "Small force, daily.", "variables": []},
+    {"id": "m7", "name": "Decomposing Everyday Systems", "format": "DECOMPOSE", "hook": "Name parts. Explain flows.", "variables": ["object"]},
+    {"id": "m8", "name": "Systemic Learning Discipline", "format": "STEPS", "hook": "Integrate, don't scatter.", "variables": []},
+    {"id": "m9", "name": "Template‑Driven Learning Discipline", "format": "TEMPLATE", "hook": "Use the template.", "variables": ["timescale"]},
+    {"id": "m10", "name": "Self‑Check Discipline Habit", "format": "CHECKLOOP", "hook": "Run the self‑check.", "variables": ["topic"]},
+    {"id": "m11", "name": "Challenge Inner Zombie Autopilot", "format": "Z-DEBUG", "hook": "Question the autopilot.", "variables": ["behavior"]},
+    {"id": "m12", "name": "Monastic Study Discipline", "format": "MONK-FOCUS", "hook": "Short vows, deep work.", "variables": ["duration_min"]},
+    {"id": "m13", "name": "Student Digital Minimalism Harmony", "format": "DIGI-MIN", "hook": "Less feed. More world.", "variables": []},
+    {"id": "m14", "name": "Incremental Before‑After Reflection", "format": "REFLECT", "hook": "Compare to yesterday.", "variables": ["delta_unit"]},
+    {"id": "m15", "name": "Incremental Mutations Mindset", "format": "GIT-MUTATE", "hook": "Ship small mutations.", "variables": ["topic"]},
+    {"id": "m16", "name": "Slow Steady Deep Reading", "format": "DEEP-READ", "hook": "Read slow. Think deep.", "variables": ["pages"]},
+    {"id": "m17", "name": "Slow Steady Skill Building", "format": "STEPS", "hook": "Repeat > sprint.", "variables": ["skill"]},
+    {"id": "m18", "name": "Stepping Stones Momentum", "format": "STEPS", "hook": "Only next stone matters.", "variables": ["next_step"]},
+    {"id": "m19", "name": "Micro‑Steps to Mastery", "format": "CHECKLOOP", "hook": "Make it atomic.", "variables": ["micro_task"]},
+    {"id": "m20", "name": "Slow and Steady Wins", "format": "STEPS", "hook": "Slow is sustainable.", "variables": []}
+  ],
+  "methods": [
     {
-      "id": "T-SR",
-      "name": "Sequential Review Strip",
-      "source_refs": ["useful_meme_068","useful_meme_021","useful_meme_044"],
-      "panels": 3,
-      "beats": [
-        {"t": 0.0, "progress_bar_pct": 25, "caption": "Review Week 1"},
-        {"t": 1.6, "progress_bar_pct": 50, "caption": "Review Week 2"},
-        {"t": 3.2, "progress_bar_pct": 75, "caption": "Next Slot Booked"}
-      ],
-      "export": {"image": {"allow": true}, "video": {"allow": true, "duration_s": 5.0}}
+      "id": "method.reflect.v1",
+      "inputs": ["hook_text", "before_label", "after_label"],
+      "steps": ["place_hook","pose_think","mirror_pose","add_delta_symbol"],
+      "outputs": ["png_or_mp4"]
     },
     {
-      "id": "T-SS",
-      "name": "Systematic Study Builder",
-      "source_refs": ["useful_meme_113"],
-      "panels": 2,
-      "beats": [
-        {"t": 0.0, "prop": "sticky_new_thread", "caption": "Build Topic"},
-        {"t": 1.0, "prop": "sticky_revisit_stamp", "caption": "Return Weekly"}
-      ]
+      "id": "method.steps.v1",
+      "inputs": ["hook_text", "step_label"],
+      "steps": ["draw_path","pose_carry_brick","animate_step","tick_calendar"],
+      "outputs": ["png_or_mp4"]
     },
     {
-      "id": "T-MS",
-      "name": "Micro-Steps",
-      "source_refs": ["useful_meme_058"],
-      "panels": 3,
-      "beats": [
-        {"t": 0.0, "prop": "sticky_1of3", "caption": "Small Parts, Done"},
-        {"t": 1.2, "prop": "sticky_2of3"},
-        {"t": 2.4, "prop": "sticky_3of3"}
-      ]
+      "id": "method.checkloop.v1",
+      "inputs": ["hook_text", "check_items"],
+      "steps": ["draw_list","tick_one","increment_streak"],
+      "outputs": ["png_or_mp4"]
     },
     {
-      "id": "T-PM",
-      "name": "Error → Rule",
-      "source_refs": ["useful_meme_015"],
-      "panels": 2,
-      "beats": [
-        {"t": 0.0, "prop": "red_X_card", "caption": "Error → Rule"},
-        {"t": 1.2, "prop": "green_rule_card", "body_text": "If calendar slips, schedule review, not tasks."}
-      ]
+      "id": "method.zdebug.v1",
+      "inputs": ["hook_text", "idea_string"],
+      "steps": ["spawn_mask_warn","apply_verify_stamp","fade_mask_80pct","show_test_card"],
+      "outputs": ["png_or_mp4"]
     },
     {
-      "id": "T-SD",
-      "name": "Slow Deep Reading",
-      "source_refs": ["useful_meme_031"],
-      "panels": 2,
-      "beats": [
-        {"t": 0.0, "prop": "tortoise_cameo", "caption": "Slow Beats Shallow"},
-        {"t": 1.0, "prop": "magnifier_over_paragraph"}
-      ]
+      "id": "method.decompose.v1",
+      "inputs": ["object_name", "parts_list", "flow_arrows"],
+      "steps": ["draw_object","explode_parts","label_interfaces_flows"],
+      "outputs": ["png_or_mp4"]
     }
   ],
-  "render_rules": {
-    "stroke_px": 8,
-    "shadow_px": 12,
-    "progress_bar_height_px": 40,
-    "icon_size_px": 96,
-    "safe_inset_pct": 5,
-    "contrast_min_WCAG_Lc": 60
+  "validation": {
+    "checks": [
+      "contrast >= 4.5",
+      "text_within_safe_area",
+      "words_hook <= 7",
+      "words_body <= 14",
+      "no_episteme_animation"
+    ]
   },
-  "export": {
-    "image": {"format": "PNG", "profile": "sRGB", "max_kB": 400},
-    "video": {"format": "MP4", "codec": "H.264", "fps": 24, "bitrate_Mbps": 4, "max_MB": 8},
-    "file_naming": "YYYYMMDD_{templateID}_{slug}_{take}"
-  },
-  "prompt_templates": {
-    "image_generator_prompt": "Flat 2D icon of a small square robot named Stepper with a progress-bar face, thick black outline, minimal shading, white background, accent indigo and progress green, holding sticky notes and a checklist.",
-    "negative_terms": ["photorealistic", "busy background", "glossy 3D", "overly detailed"]
-  },
-  "assumptions": [
-    "Target viewers are early-stage systems-thinking practitioners in work/life scenes.",
-    "Memes emphasize systematicity, sequential practice, reflection, and checklists.",
-    "Short captions outperform copy-heavy panels for completion."
-  ],
-  "model": {
-    "causal": "Visibility of a concrete next step increases the odds of enactment on the next occasion by Δp.",
-    "units": {"time": "s", "size": "px", "probability": "0–1"}
-  },
-  "options": [
-    "1: Single-panel stills only",
-    "2: 3–5 s micro-animations",
-    "3: Carousels (multi-image posts)"
-  ],
-  "pick": "Option 2 for primary; Option 1 as fallback for low-budget channels.",
-  "tests": [
-    {
-      "name": "Caption-length A/B",
-      "hypothesis": "3–7 word captions yield ≥10% higher completion than ≥12 words.",
-      "metric": "video_completion_rate",
-      "bounds": {"min_n": 2000, "alpha": 0.05}
-    },
-    {
-      "name": "Panel-count A/B",
-      "hypothesis": "3-beat sequences (T-SR) raise next-session booking by 5–15% vs single-beat.",
-      "metric": "click_through_to_scheduler",
-      "bounds": {"effect_size_range": [0.05, 0.15]}
-    },
-    {
-      "name": "Determinism check",
-      "procedure": "Render W1 at 1080×1080 with seed 42; verify sticky positions and caption bbox match spec within ±2 px.",
-      "acceptance": "All bboxes within tolerance; colors within ΔE<2."
-    }
-  ],
-  "risks": [
-    "Overfitting to a single aesthetic reduces novelty; rotate accent colors and tokens.",
-    "Too-vague captions (no verb, no unit) collapse recognizability.",
-    "Progress bars without real next step degrade trust."
-  ],
-  "next": [
-    "Add T-CM (Checklist Milestones) and T-RA (Resilient Adaptation) to the template library.",
-    "Instrument exports with UTM and templateID to enable per-template lift estimates."
-  ],
   "work_examples": [
     {
-      "id": "W1",
-      "template": "T-MS",
-      "canvas": "1080x1080",
-      "caption": "Small Parts, Done",
-      "layers_hash": "sha256:stub-w1",
-      "expected_files": ["20251012_T-MS_small-parts-done_take01.png"]
+      "id": "ex.ig.m1",
+      "meme_id": "m1",
+      "template": "REFLECT",
+      "canvas": "IG_portrait_1080x1350",
+      "caption": {"hook": "Swap pressure for curiosity.", "body": "Log one insight after session."}
     },
     {
-      "id": "W2",
-      "template": "T-SR",
-      "canvas": "1080x1920",
-      "duration_s": 5.0,
-      "expected_files": ["20251012_T-SR_review-week_take01.mp4"]
+      "id": "ex.story.m3",
+      "meme_id": "m3",
+      "template": "Z-DEBUG",
+      "canvas": "Story_1080x1920",
+      "duration_s": 6.0,
+      "beats_s": [2.0, 1.5, 2.5],
+      "caption": {"hook": "Test ideas. Not vibes.", "body": "If it survives a check, keep it."}
     },
     {
-      "id": "W3",
-      "template": "T-PM",
-      "canvas": "1920x1080",
-      "expected_files": ["20251012_T-PM_error-to-rule_take01.png"]
+      "id": "ex.carousel.m7",
+      "meme_id": "m7",
+      "template": "DECOMPOSE",
+      "panels": 3,
+      "subject": "Scissors"
     }
-  ]
+  ],
+  "guardrails": {
+    "only_system_acts": true,
+    "no_outcome_promises": true,
+    "measurement_external": true,
+    "brand_limits": ["no_third_party_logo", "no_character_lookalikes"]
+  },
+  "licensing": {
+    "mascot_art": "CC BY-NC 4.0 suggested (replace as needed)",
+    "font": "Open font (Inter/Noto)",
+    "stock": "Only self-made vectors"
+  }
 }
