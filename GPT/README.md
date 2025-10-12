@@ -1,5 +1,7 @@
 # Info about GPT create as custom
 
+## Located
+https://chatgpt.com/g/g-68ec02eda3e48191810cbc8dcb27553c-manager-engineers-community-mascot-imagenator
 
 ## Instruction
 ```
