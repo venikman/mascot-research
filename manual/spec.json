@@ -1,0 +1,200 @@
+{
+  "system": {
+    "holder": {
+      "name": "Stepper Rig v1.0",
+      "type": "2.5D vector puppet + caption overlay toolchain",
+      "layers": ["bg", "grid", "stepper_body", "arms", "face_progressbar", "eyes", "mouth", "props", "caption", "watermark"],
+      "controls": {
+        "progress_bar_pct": [0, 25, 50, 75, 100],
+        "eye": ["open", "half", "closed", "side"],
+        "mouth": ["flat", "smile", "think", "determined"],
+        "accent_color": ["#4F46E5", "#22C55E", "#EF4444"]
+      },
+      "canvas": {
+        "ratios": ["1:1", "9:16", "16:9"],
+        "base_px": { "square": [1080,1080], "vertical": [1080,1920], "horizontal": [1920,1080] },
+        "safe_inset_pct": 5
+      }
+    },
+    "role": {
+      "name": "TransformerRole:Habit-Meme Transformer",
+      "context": ["study", "workday planning", "personal development"],
+      "authority": ["compose panels", "animate beats", "overlay captions", "export assets"],
+      "prohibitions": ["no claims beyond episteme", "no acting by docs themselves"]
+    },
+    "episteme": {
+      "sources": [
+        {"path": "/mnt/data/Memes.md", "note": "Top 'useful' meme patterns guiding behaviors"},
+        {"path": "/mnt/data/q-a-3.2.md", "note": "Target, boundary, scenes matrix"}
+      ],
+      "non_acting": true
+    }
+  },
+  "style": {
+    "palette": {
+      "bg": "#FFFFFF",
+      "line": "#111111",
+      "accent_indigo": "#4F46E5",
+      "progress_green": "#22C55E",
+      "danger_red": "#EF4444",
+      "shadow": "rgba(0,0,0,0.2)"
+    },
+    "typography": {
+      "caption_font": "Inter Black",
+      "body_font": "Inter Medium",
+      "caption_rules": {
+        "max_lines": 2,
+        "max_chars_per_line": 38,
+        "min_words": 3,
+        "max_words": 7,
+        "forbid": ["!"],
+        "prefer": ["verbs", "numbers", "units_SI"]
+      }
+    },
+    "layout": {
+      "grid_cols": 12,
+      "col_gutter_px": 24,
+      "caption_block_cols": [1,7],
+      "watermark_pos": "bottom_right",
+      "watermark_opacity": 0.4
+    }
+  },
+  "templates": [
+    {
+      "id": "T-SR",
+      "name": "Sequential Review Strip",
+      "source_refs": ["useful_meme_068","useful_meme_021","useful_meme_044"],
+      "panels": 3,
+      "beats": [
+        {"t": 0.0, "progress_bar_pct": 25, "caption": "Review Week 1"},
+        {"t": 1.6, "progress_bar_pct": 50, "caption": "Review Week 2"},
+        {"t": 3.2, "progress_bar_pct": 75, "caption": "Next Slot Booked"}
+      ],
+      "export": {"image": {"allow": true}, "video": {"allow": true, "duration_s": 5.0}}
+    },
+    {
+      "id": "T-SS",
+      "name": "Systematic Study Builder",
+      "source_refs": ["useful_meme_113"],
+      "panels": 2,
+      "beats": [
+        {"t": 0.0, "prop": "sticky_new_thread", "caption": "Build Topic"},
+        {"t": 1.0, "prop": "sticky_revisit_stamp", "caption": "Return Weekly"}
+      ]
+    },
+    {
+      "id": "T-MS",
+      "name": "Micro-Steps",
+      "source_refs": ["useful_meme_058"],
+      "panels": 3,
+      "beats": [
+        {"t": 0.0, "prop": "sticky_1of3", "caption": "Small Parts, Done"},
+        {"t": 1.2, "prop": "sticky_2of3"},
+        {"t": 2.4, "prop": "sticky_3of3"}
+      ]
+    },
+    {
+      "id": "T-PM",
+      "name": "Error → Rule",
+      "source_refs": ["useful_meme_015"],
+      "panels": 2,
+      "beats": [
+        {"t": 0.0, "prop": "red_X_card", "caption": "Error → Rule"},
+        {"t": 1.2, "prop": "green_rule_card", "body_text": "If calendar slips, schedule review, not tasks."}
+      ]
+    },
+    {
+      "id": "T-SD",
+      "name": "Slow Deep Reading",
+      "source_refs": ["useful_meme_031"],
+      "panels": 2,
+      "beats": [
+        {"t": 0.0, "prop": "tortoise_cameo", "caption": "Slow Beats Shallow"},
+        {"t": 1.0, "prop": "magnifier_over_paragraph"}
+      ]
+    }
+  ],
+  "render_rules": {
+    "stroke_px": 8,
+    "shadow_px": 12,
+    "progress_bar_height_px": 40,
+    "icon_size_px": 96,
+    "safe_inset_pct": 5,
+    "contrast_min_WCAG_Lc": 60
+  },
+  "export": {
+    "image": {"format": "PNG", "profile": "sRGB", "max_kB": 400},
+    "video": {"format": "MP4", "codec": "H.264", "fps": 24, "bitrate_Mbps": 4, "max_MB": 8},
+    "file_naming": "YYYYMMDD_{templateID}_{slug}_{take}"
+  },
+  "prompt_templates": {
+    "image_generator_prompt": "Flat 2D icon of a small square robot named Stepper with a progress-bar face, thick black outline, minimal shading, white background, accent indigo and progress green, holding sticky notes and a checklist.",
+    "negative_terms": ["photorealistic", "busy background", "glossy 3D", "overly detailed"]
+  },
+  "assumptions": [
+    "Target viewers are early-stage systems-thinking practitioners in work/life scenes.",
+    "Memes emphasize systematicity, sequential practice, reflection, and checklists.",
+    "Short captions outperform copy-heavy panels for completion."
+  ],
+  "model": {
+    "causal": "Visibility of a concrete next step increases the odds of enactment on the next occasion by Δp.",
+    "units": {"time": "s", "size": "px", "probability": "0–1"}
+  },
+  "options": [
+    "1: Single-panel stills only",
+    "2: 3–5 s micro-animations",
+    "3: Carousels (multi-image posts)"
+  ],
+  "pick": "Option 2 for primary; Option 1 as fallback for low-budget channels.",
+  "tests": [
+    {
+      "name": "Caption-length A/B",
+      "hypothesis": "3–7 word captions yield ≥10% higher completion than ≥12 words.",
+      "metric": "video_completion_rate",
+      "bounds": {"min_n": 2000, "alpha": 0.05}
+    },
+    {
+      "name": "Panel-count A/B",
+      "hypothesis": "3-beat sequences (T-SR) raise next-session booking by 5–15% vs single-beat.",
+      "metric": "click_through_to_scheduler",
+      "bounds": {"effect_size_range": [0.05, 0.15]}
+    },
+    {
+      "name": "Determinism check",
+      "procedure": "Render W1 at 1080×1080 with seed 42; verify sticky positions and caption bbox match spec within ±2 px.",
+      "acceptance": "All bboxes within tolerance; colors within ΔE<2."
+    }
+  ],
+  "risks": [
+    "Overfitting to a single aesthetic reduces novelty; rotate accent colors and tokens.",
+    "Too-vague captions (no verb, no unit) collapse recognizability.",
+    "Progress bars without real next step degrade trust."
+  ],
+  "next": [
+    "Add T-CM (Checklist Milestones) and T-RA (Resilient Adaptation) to the template library.",
+    "Instrument exports with UTM and templateID to enable per-template lift estimates."
+  ],
+  "work_examples": [
+    {
+      "id": "W1",
+      "template": "T-MS",
+      "canvas": "1080x1080",
+      "caption": "Small Parts, Done",
+      "layers_hash": "sha256:stub-w1",
+      "expected_files": ["20251012_T-MS_small-parts-done_take01.png"]
+    },
+    {
+      "id": "W2",
+      "template": "T-SR",
+      "canvas": "1080x1920",
+      "duration_s": 5.0,
+      "expected_files": ["20251012_T-SR_review-week_take01.mp4"]
+    },
+    {
+      "id": "W3",
+      "template": "T-PM",
+      "canvas": "1920x1080",
+      "expected_files": ["20251012_T-PM_error-to-rule_take01.png"]
+    }
+  ]
+}
