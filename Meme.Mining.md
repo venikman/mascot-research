@@ -45,7 +45,7 @@ You can deterministically build prompts from the Representation fields. Here are
 ### 3A) Image prompt (single or multiform)
 ```
 [SCENE] A {media_style} {aspect_ratio} image for {platform_target}.
-[LAYOUT] Use {variant or geometry spec}. Ensure beats P1→P2→P3 in order.
+[LAYOUT] Use {variant or geometry spec}. If `media=multiform`, ensure beats P1→P2→P3 in order; otherwise follow the specified geometry (no P‑labels).
 [ROLES] Slot A = {slot_A binding}; Slot B = {slot_B binding}. Headline: "{headline_text}".
 [STANCE] Tone: {stance}; forbid {disallowed tone from policy}.
 [PALETTE] {palette}; contrast >= 4.5:1; background/lighting {background/lighting}.
@@ -57,7 +57,7 @@ You can deterministically build prompts from the Representation fields. Here are
 ### 3B) Video prompt (short form)
 ```
 [FORMAT] {duration}s video, {resolution}. Target: {platform_target}.
-[BEATS] Timestamps → P1 {t1}s: {setup}; P2 {t2}s: {turn}; P3 {t3}s: {resolution}.
+[BEATS] Timestamps → Beat1 {t1}s: {setup}; Beat2 {t2}s: {turn}; Beat3 {t3}s: {resolution}.
 [VISUALS] Palette {palette}; required motifs {glyphs}; stance {stance}.
 [AUDIO] Voiceover "{narration}" (optional). Loudness ≥ -14 LUFS if VO present.
 [INVARIANTS] Keep {identity invariants}; allow {allowed_mutations}.
@@ -126,8 +126,8 @@ ALT "Mask → human verifies → risk fades after checks."
 
 ```
 FORMAT 8-10s, square, LinkedIn.
-BEATS P1 0–3s: code stream with warning mask; P2 3–7s: reviewer stamps
-VERIFY; P3 7–10s: bug overlay fades.
+BEATS Beat1 0–3s: code stream with warning mask; Beat2 3–7s: reviewer stamps
+VERIFY; Beat3 7–10s: bug overlay fades.
 VISUALS Palette neutral UI; stance practical.
 AUDIO Optional VO "Fast with guardrails"; loudness >= -14 LUFS; captions on; en-US.
 INVARIANTS Required mask→verify→fade; stance parity.`

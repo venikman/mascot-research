@@ -46,8 +46,8 @@
 
 ## Part 3 — Conformance & Lint (all variants)
 **Generic authoring invariants**
--  Correct grid/timing: 3 panels with equal gutters and symmetric widths (unless overridden by variant).
--  Beats match the variant triplet (P1→P2→P3) without re‑ordering.
+-  Correct grid/timing (multiform): 3 panels with equal gutters and symmetric widths (unless overridden by variant).
+-  For **multiform only**, beats match the variant triplet (P1→P2→P3) without re‑ordering; other media use declared beat labels (e.g., setup/turn/resolution) without P‑labels.
 -  Required glyphs/effects/pose deltas present (per variant).
 -  Legibility: text passes at target size; contrast ≥ 4.5:1.
 -  Alt text present, naming beats and P3 outcome.

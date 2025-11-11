@@ -6,7 +6,7 @@
 
 ## 1. Layout / Timing / Beat Structure
 - if **image**: geometry (left/right/headline/footer)
-- if **multiform**: beats `P1→P2→P3` (variant = `REFLECT | STEPS | CHECKLOOP | …`)
+- if **multiform**: beats `P1→P2→P3` (variant = `REFLECT | STEPS | CHECKLOOP | …`) _(P‑labels are reserved for multiform only)_
 - if **video**: duration; key beat timestamps (s)
 - if **audio**: motif start–end; tempo (BPM)
 - if **text**: structure (lines, rhythm, emphasis markers)
