@@ -1,0 +1,192 @@
+{
+  "final_model": {
+    "title": "Slow Steady Skill Building",
+    "mode": "M-1",
+    "edition": "2025-11-12",
+    "bc": {
+      "platform": "Instagram+Reels",
+      "culture": "SystemsWorld",
+      "language": "en",
+      "source_url": "https://github.com/venikman/mascot-research"
+    },
+    "form": {
+      "aspect": "4:5",
+      "dimension_px": [
+        1080,
+        1350
+      ],
+      "padding_px": 64,
+      "style": "flat",
+      "palette": {
+        "ink": "#111111",
+        "paper": "#FFFFFF",
+        "accentA": "#FF6A00",
+        "accentB": "#3178C6",
+        "calm": "#10B981",
+        "warn": "#D61F1F"
+      },
+      "geometry": {
+        "headline": {
+          "x": 64,
+          "y": 80,
+          "w": 952,
+          "h": 140
+        },
+        "left": {
+          "x": 64,
+          "y": 240,
+          "w": 456,
+          "h": 650
+        },
+        "right": {
+          "x": 564,
+          "y": 240,
+          "w": 452,
+          "h": 650
+        },
+        "footer": {
+          "x": 64,
+          "y": 1130,
+          "w": 952,
+          "h": 140
+        }
+      },
+      "slots": {
+        "A": {
+          "role": "before_state",
+          "mandatory": true
+        },
+        "B": {
+          "role": "after_state",
+          "mandatory": true
+        }
+      }
+    },
+    "stance": "Growth-oriented, evidence-based learning",
+    "meaning": {
+      "claim_short": "Repeat > sprint.",
+      "reasons": [
+        "The core behavioral pattern in this meme emphasizes the value of gradual, iterative progress in learning and personal development, advocating for consistent repetition and accumulation of knowledge over the pursuit of quick, superficial results.",
+        "It draws from educational topics that use review questions to reinforce understanding, promoting a patient, step-by-step approach that builds lasting skills without haste.",
+        "This pattern encourages resilience and long-term growth by normalizing incremental advancements as the path to meaningful achievement."
+      ],
+      "falsifier": "If practice does not lead to observable improvement over time.",
+      "roles": {
+        "A": "Learner seeking growth",
+        "B": "Educational system/mentor"
+      }
+    },
+    "policy": {
+      "copying_rules": "Must preserve core behavior pattern and metrics framework",
+      "rationality": "Empirically validated through MemeMeter_v1 metrics",
+      "identity": {
+        "must_stay": [
+          "core_behavior_pattern",
+          "metrics_framework",
+          "educational_context"
+        ],
+        "may_change": [
+          "visual_style",
+          "language",
+          "platform"
+        ]
+      },
+      "invariants": [
+        "Behavior pattern must remain recognizable (ρ >= 0.70)",
+        "Educational value must be maintained",
+        "No outcome promises allowed"
+      ],
+      "allowed_mutations": [
+        "Translate to different languages",
+        "Adapt visual format to platform",
+        "Adjust examples to cultural context"
+      ],
+      "bridge": {
+        "en_ru": "Preserve systems-thinking terminology",
+        "cultures": "Maintain educational community values"
+      }
+    }
+  },
+  "representation": {
+    "meta": {
+      "meme_id": "m17",
+      "media_type": "image",
+      "platform": "Instagram",
+      "export_date": "2025-11-12"
+    },
+    "layout": {
+      "type": "image",
+      "geometry": {
+        "headline": {
+          "x": 64,
+          "y": 80,
+          "w": 952,
+          "h": 140
+        },
+        "body": {
+          "x": 64,
+          "y": 1130,
+          "w": 952,
+          "h": 140
+        },
+        "panels": 3
+      }
+    },
+    "content": {
+      "headline": "Repeat > sprint.",
+      "slot_A": "Before state visualization",
+      "slot_B": "After state visualization",
+      "slot_C": null,
+      "narration": null
+    },
+    "invariants": {
+      "colors": {
+        "ink": "#111111",
+        "paper": "#FFFFFF",
+        "accentA": "#FF6A00",
+        "accentB": "#3178C6",
+        "calm": "#10B981",
+        "warn": "#D61F1F"
+      },
+      "contrast_threshold": 4.5,
+      "stance_parity": true,
+      "glyphs": [
+        "Stepper mascot",
+        "Progress indicators"
+      ]
+    },
+    "accessibility": {
+      "alt": "Slow Steady Skill Building: Repeat > sprint.",
+      "caption": "The core behavioral pattern in this meme emphasizes the value of gradual, iterative progress in learning and personal development, advocating for consistent repetition and accumulation of knowledge ov...",
+      "lang": "en"
+    },
+    "lint": {
+      "complete": true,
+      "contrast_ok": true,
+      "text_safe": true,
+      "no_anim_episteme": true,
+      "slots_filled": true,
+      "id_preserved": true
+    },
+    "export": {
+      "format": "PNG",
+      "resolution_px": [
+        1080,
+        1350
+      ]
+    }
+  },
+  "_metadata": {
+    "version": "1.0.0",
+    "method_version": "1.0.0",
+    "generator": "mascot-research/scripts/generate-release.js",
+    "metrics": {
+      "recognizability": 0.7,
+      "fidelity": 0.4451,
+      "diversity": 1.585,
+      "affect": 1,
+      "risk": 0
+    },
+    "popularity": 20
+  }
+}

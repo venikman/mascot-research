@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "release_date": "2025-11-12",
+  "method_version": "1.0.0",
+  "spec_version": "1.0.0",
+  "total_memes": 16,
+  "compatible_with": "cass/meme.schema.json",
+  "metrics_framework": "MemeMeter_v1",
+  "files": [
+    "m11_Challenge_Inner_Zombie_Autopilot.json",
+    "m12_Monastic_Study_Discipline.json",
+    "m13_Student_Digital_Minimalism_Harmony.json",
+    "m15_Incremental_Mutations_Mindset.json",
+    "m16_Slow_Steady_Deep_Reading.json",
+    "m17_Slow_Steady_Skill_Building.json",
+    "m18_Stepping_Stones_Momentum.json",
+    "m1_Reflective_Intrinsic_Motivation_Shift.json",
+    "m20_Slow_and_Steady_Wins.json",
+    "m2_Incremental_Progress_Reflection.json",
+    "m3_Exorcising_Zombie_Ideas.json",
+    "m4_Growth_Through_Error_Reflection.json",
+    "m5_Consistent_Practice_Builds_Mastery.json",
+    "m6_Persistence_Pays_Off.json",
+    "m7_Decomposing_Everyday_Systems.json",
+    "m8_Systemic_Learning_Discipline.json"
+  ]
+}

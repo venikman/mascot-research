@@ -1,0 +1,192 @@
+{
+  "final_model": {
+    "title": "Persistence Pays Off",
+    "mode": "M-2",
+    "edition": "2025-11-12",
+    "bc": {
+      "platform": "Instagram+Reels",
+      "culture": "SystemsWorld",
+      "language": "en",
+      "source_url": "https://github.com/venikman/mascot-research"
+    },
+    "form": {
+      "aspect": "4:5",
+      "dimension_px": [
+        1080,
+        1350
+      ],
+      "padding_px": 64,
+      "style": "flat",
+      "palette": {
+        "ink": "#111111",
+        "paper": "#FFFFFF",
+        "accentA": "#FF6A00",
+        "accentB": "#3178C6",
+        "calm": "#10B981",
+        "warn": "#D61F1F"
+      },
+      "geometry": {
+        "headline": {
+          "x": 64,
+          "y": 80,
+          "w": 952,
+          "h": 140
+        },
+        "left": {
+          "x": 64,
+          "y": 240,
+          "w": 456,
+          "h": 650
+        },
+        "right": {
+          "x": 564,
+          "y": 240,
+          "w": 452,
+          "h": 650
+        },
+        "footer": {
+          "x": 64,
+          "y": 1130,
+          "w": 952,
+          "h": 140
+        }
+      },
+      "slots": {
+        "A": {
+          "role": "before_state",
+          "mandatory": true
+        },
+        "B": {
+          "role": "after_state",
+          "mandatory": true
+        }
+      }
+    },
+    "stance": "Growth-oriented, evidence-based learning",
+    "meaning": {
+      "claim_short": "Small force, daily.",
+      "reasons": [
+        "This meme encapsulates the behavioral pattern of confronting obstacles with persistent effort, illustrating how sustained determination can lead to overcoming challenges and achieving success.",
+        "It promotes a mindset of resilience, where individuals view difficulties not as barriers but as opportunities for growth through continued action.",
+        "In educational settings, it reinforces the value of grit and perseverance as essential traits for long-term accomplishment."
+      ],
+      "falsifier": "If practice does not lead to observable improvement over time.",
+      "roles": {
+        "A": "Learner seeking growth",
+        "B": "Educational system/mentor"
+      }
+    },
+    "policy": {
+      "copying_rules": "Must preserve core behavior pattern and metrics framework",
+      "rationality": "Empirically validated through MemeMeter_v1 metrics",
+      "identity": {
+        "must_stay": [
+          "core_behavior_pattern",
+          "metrics_framework",
+          "educational_context"
+        ],
+        "may_change": [
+          "visual_style",
+          "language",
+          "platform"
+        ]
+      },
+      "invariants": [
+        "Behavior pattern must remain recognizable (ρ >= 0.70)",
+        "Educational value must be maintained",
+        "No outcome promises allowed"
+      ],
+      "allowed_mutations": [
+        "Translate to different languages",
+        "Adapt visual format to platform",
+        "Adjust examples to cultural context"
+      ],
+      "bridge": {
+        "en_ru": "Preserve systems-thinking terminology",
+        "cultures": "Maintain educational community values"
+      }
+    }
+  },
+  "representation": {
+    "meta": {
+      "meme_id": "m6",
+      "media_type": "image",
+      "platform": "Instagram",
+      "export_date": "2025-11-12"
+    },
+    "layout": {
+      "type": "image",
+      "geometry": {
+        "headline": {
+          "x": 64,
+          "y": 80,
+          "w": 952,
+          "h": 140
+        },
+        "body": {
+          "x": 64,
+          "y": 1130,
+          "w": 952,
+          "h": 140
+        },
+        "panels": 3
+      }
+    },
+    "content": {
+      "headline": "Small force, daily.",
+      "slot_A": "Before state visualization",
+      "slot_B": "After state visualization",
+      "slot_C": null,
+      "narration": null
+    },
+    "invariants": {
+      "colors": {
+        "ink": "#111111",
+        "paper": "#FFFFFF",
+        "accentA": "#FF6A00",
+        "accentB": "#3178C6",
+        "calm": "#10B981",
+        "warn": "#D61F1F"
+      },
+      "contrast_threshold": 4.5,
+      "stance_parity": true,
+      "glyphs": [
+        "Stepper mascot",
+        "Progress indicators"
+      ]
+    },
+    "accessibility": {
+      "alt": "Persistence Pays Off: Small force, daily.",
+      "caption": "This meme encapsulates the behavioral pattern of confronting obstacles with persistent effort, illustrating how sustained determination can lead to overcoming challenges and achieving success. It prom...",
+      "lang": "en"
+    },
+    "lint": {
+      "complete": true,
+      "contrast_ok": true,
+      "text_safe": true,
+      "no_anim_episteme": true,
+      "slots_filled": true,
+      "id_preserved": true
+    },
+    "export": {
+      "format": "PNG",
+      "resolution_px": [
+        1080,
+        1350
+      ]
+    }
+  },
+  "_metadata": {
+    "version": "1.0.0",
+    "method_version": "1.0.0",
+    "generator": "mascot-research/scripts/generate-release.js",
+    "metrics": {
+      "recognizability": 0.8,
+      "fidelity": 0.4517,
+      "diversity": 0,
+      "affect": 1,
+      "risk": 0
+    },
+    "popularity": 22
+  }
+}
