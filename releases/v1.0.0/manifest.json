@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "release_date": "2025-11-12",
+  "method_version": "1.0.0",
+  "description": "Meme Mining, Modeling, and Representation Methodology",
+  "compatible_with": "cass/meme.schema.json",
+  "contents": {
+    "methodology_docs": [
+      "Meme.Mining.md",
+      "Meme.Modeling.md",
+      "Meme.Meaning.md",
+      "Meme.Representation.md",
+      "Instuction.md"
+    ],
+    "example_templates": 3,
+    "example_files": [
+      "reflect_reflective_learning_pattern.json",
+      "steps_incremental_progress_pattern.json",
+      "z-debug_error_correction_pattern.json"
+    ]
+  },
+  "usage": "Use methodology docs to create memes, then generate JSON following example templates",
+  "repository": "https://github.com/venikman/mascot-research"
+}

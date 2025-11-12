@@ -1,0 +1,185 @@
+{
+  "final_model": {
+    "title": "Incremental Progress Pattern",
+    "mode": "M-2",
+    "edition": "2025-11-12",
+    "bc": {
+      "platform": "Instagram",
+      "culture": "systems-thinking-community",
+      "language": "en",
+      "source_url": "https://github.com/venikman/mascot-research"
+    },
+    "form": {
+      "aspect": "4:5",
+      "dimension_px": [
+        1080,
+        1350
+      ],
+      "padding_px": 64,
+      "style": "flat-minimal",
+      "palette": {
+        "ink": "#111111",
+        "paper": "#FFFFFF",
+        "accentA": "#FF6A00",
+        "accentB": "#3178C6",
+        "calm": "#10B981",
+        "warn": "#D61F1F"
+      },
+      "geometry": {
+        "headline": {
+          "x": 64,
+          "y": 80,
+          "w": 952,
+          "h": 140
+        },
+        "left": {
+          "x": 64,
+          "y": 240,
+          "w": 456,
+          "h": 650
+        },
+        "right": {
+          "x": 564,
+          "y": 240,
+          "w": 452,
+          "h": 650
+        },
+        "footer": {
+          "x": 64,
+          "y": 1130,
+          "w": 952,
+          "h": 140
+        }
+      },
+      "slots": {
+        "A": {
+          "role": "before_state",
+          "mandatory": true
+        },
+        "B": {
+          "role": "after_state",
+          "mandatory": true
+        }
+      }
+    },
+    "stance": "Earnest and supportive; growth-oriented",
+    "meaning": {
+      "claim_short": "One small step daily",
+      "reasons": [
+        "Supports sustainable learning habits",
+        "Reduces cognitive load through systematic approach",
+        "Builds long-term capability through regular practice"
+      ],
+      "falsifier": "If practice does not lead to observable improvement over consistent time period",
+      "roles": {
+        "A": "Learner seeking growth",
+        "B": "Educational context/system"
+      }
+    },
+    "policy": {
+      "copying_rules": "Must preserve core behavior pattern and educational value",
+      "rationality": "Evidence-based learning principles",
+      "identity": {
+        "must_stay": [
+          "core_behavior_pattern",
+          "educational_stance",
+          "growth_orientation"
+        ],
+        "may_change": [
+          "visual_style",
+          "language",
+          "platform_specifics"
+        ]
+      },
+      "invariants": [
+        "Behavior pattern must remain clear and recognizable",
+        "Educational value must be preserved",
+        "Growth mindset must be maintained"
+      ],
+      "allowed_mutations": [
+        "Translate to different languages",
+        "Adapt visual format to platform constraints",
+        "Adjust examples to cultural context"
+      ],
+      "bridge": {
+        "en_ru": "Preserve systems-thinking terminology and learning concepts",
+        "cultures": "Maintain universal learning principles while adapting examples"
+      }
+    }
+  },
+  "representation": {
+    "meta": {
+      "meme_id": "example_steps",
+      "media_type": "image",
+      "platform": "Instagram",
+      "export_date": "2025-11-12"
+    },
+    "layout": {
+      "type": "image",
+      "geometry": {
+        "headline": {
+          "x": 64,
+          "y": 80,
+          "w": 952,
+          "h": 140
+        },
+        "body": {
+          "x": 64,
+          "y": 1130,
+          "w": 952,
+          "h": 140
+        },
+        "panels": 3
+      }
+    },
+    "content": {
+      "headline": "One small step daily",
+      "slot_A": "Visual representation of current state",
+      "slot_B": "Visual representation of desired state",
+      "slot_C": null,
+      "narration": null
+    },
+    "invariants": {
+      "colors": {
+        "ink": "#111111",
+        "paper": "#FFFFFF",
+        "accentA": "#FF6A00",
+        "accentB": "#3178C6"
+      },
+      "contrast_threshold": 4.5,
+      "stance_parity": true,
+      "glyphs": [
+        "Mascot character",
+        "Progress indicators",
+        "Learning symbols"
+      ]
+    },
+    "accessibility": {
+      "alt": "Incremental Progress Pattern: One small step daily. A pattern for building consistency through small, regular actions",
+      "caption": "A pattern for building consistency through small, regular actions",
+      "lang": "en"
+    },
+    "lint": {
+      "complete": true,
+      "contrast_ok": true,
+      "text_safe": true,
+      "no_anim_episteme": true,
+      "slots_filled": true,
+      "id_preserved": true
+    },
+    "export": {
+      "format": "PNG",
+      "resolution_px": [
+        1080,
+        1350
+      ]
+    }
+  },
+  "_metadata": {
+    "version": "1.0.0",
+    "method_version": "1.0.0",
+    "generator": "mascot-research/scripts/generate-release.js",
+    "template": "STEPS",
+    "example": true
+  }
+}
