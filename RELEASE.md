@@ -31,7 +31,7 @@ We follow [Semantic Versioning](https://semver.org/):
 
 ### Auto-Versioning with AI
 
-**NEW**: You can use Claude AI to automatically analyze your changes and determine the appropriate version bump!
+**NEW**: You can use GPT (OpenAI / GitHub Copilot) to automatically analyze your changes and determine the appropriate version bump!
 
 ```bash
 # Check what version bump is recommended
@@ -47,7 +47,7 @@ See [AUTO-VERSION.md](AUTO-VERSION.md) for complete documentation on AI-powered 
 
 ### Option A: Auto-Version (Recommended)
 
-Let Claude AI analyze your changes and determine the version bump:
+Let GPT analyze your changes and determine the version bump:
 
 ```bash
 # 1. Make changes to methodology docs

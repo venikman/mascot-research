@@ -1,23 +1,25 @@
-# Auto-Versioning with Claude AI
+# Auto-Versioning with GPT
 
 This document describes how to use the AI-powered automatic version bump analyzer.
 
 ## Overview
 
-The auto-versioning system uses Claude AI to analyze changes in methodology documentation and automatically determine the appropriate semantic version bump (MAJOR, MINOR, or PATCH).
+The auto-versioning system uses GPT (OpenAI / GitHub Copilot) to analyze changes in methodology documentation and automatically determine the appropriate semantic version bump (MAJOR, MINOR, or PATCH).
 
 ## How It Works
 
 1. **Analyzes git diffs** for methodology files (Meme.Mining.md, Meme.Modeling.md, etc.)
-2. **Uses Claude AI** to understand the semantic impact of changes
+2. **Uses GPT** to understand the semantic impact of changes
 3. **Recommends version bump** based on semantic versioning principles
 4. **Optionally applies** the version bump and updates CHANGELOG.md
 
 ## Setup
 
-### 1. Get Claude API Key
+### 1. Get OpenAI API Key
 
-Get your API key from [Anthropic Console](https://console.anthropic.com/)
+Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+
+Or if you have GitHub Copilot, you can use your Copilot API key.
 
 ### 2. Configure Environment
 
@@ -26,7 +28,13 @@ Get your API key from [Anthropic Console](https://console.anthropic.com/)
 cp .env.example .env
 
 # Edit .env and add your API key
-# ANTHROPIC_API_KEY=your_actual_key_here
+# OPENAI_API_KEY=your_actual_key_here
+
+# Or use GitHub Copilot key
+# GITHUB_COPILOT_API_KEY=your_copilot_key_here
+
+# Optionally specify model (default: gpt-4o)
+# OPENAI_MODEL=gpt-4o
 ```
 
 ### 3. Install Dependencies
@@ -189,7 +197,7 @@ Triggers when:
 
 ## Fallback Mode
 
-If the Claude API key is not configured or the API is unavailable, the script falls back to rule-based analysis:
+If the OpenAI API key is not configured or the API is unavailable, the script falls back to rule-based analysis:
 
 - **MAJOR**: Detects removed required fields or sections
 - **MINOR**: Detects new sections or fields
@@ -267,7 +275,7 @@ git diff --cached
 git diff
 ```
 
-### "Could not parse Claude response"
+### "Could not parse GPT response"
 
 This can happen if the API response is malformed. The script will automatically fall back to rule-based analysis.
 
@@ -276,7 +284,7 @@ This can happen if the API response is malformed. The script will automatically 
 If you hit rate limits:
 - Wait a few minutes
 - Use the fallback mode (it's automatic)
-- Consider upgrading your Anthropic API plan
+- Consider upgrading your OpenAI API plan
 
 ## Best Practices
 
@@ -339,15 +347,21 @@ Reasoning: Breaking changes detected
 
 ## API Costs
 
-Claude Sonnet 4 pricing (as of documentation date):
-- Input: ~$3 per million tokens
-- Output: ~$15 per million tokens
+GPT-4o pricing (as of documentation date):
+- Input: ~$2.50 per million tokens
+- Output: ~$10 per million tokens
 
 Typical analysis uses:
 - Input: ~2000-5000 tokens (diff content)
 - Output: ~200 tokens (JSON response)
 
 Cost per analysis: < $0.01
+
+**Model Options:**
+- `gpt-4o` - Best accuracy, recommended (default)
+- `gpt-4-turbo` - Fast and accurate
+- `gpt-4` - High quality
+- `gpt-3.5-turbo` - Cheapest, decent quality
 
 ## Security
 

@@ -2,7 +2,7 @@
 /**
  * Auto Version Bump Analyzer
  *
- * Uses Claude AI to analyze changes in methodology documentation
+ * Uses GPT (via GitHub Copilot / OpenAI API) to analyze changes in methodology documentation
  * and determine the appropriate semantic version bump.
  *
  * Usage: node scripts/auto-version.js [--apply]
@@ -24,7 +24,8 @@ const METHODOLOGY_FILES = [
   'Instuction.md'
 ];
 
-const CLAUDE_API_KEY = process.env.ANTHROPIC_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || process.env.GITHUB_COPILOT_API_KEY;
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o'; // Use gpt-4o or gpt-4-turbo
 
 // Get current version
 function getCurrentVersion() {
@@ -95,10 +96,10 @@ async function getMethodologyDiff() {
   return diffs;
 }
 
-// Analyze changes using Claude API
-async function analyzeChangesWithClaude(diffs) {
-  if (!CLAUDE_API_KEY) {
-    console.log('\n⚠️  ANTHROPIC_API_KEY not set. Using rule-based analysis instead.\n');
+// Analyze changes using OpenAI GPT API
+async function analyzeChangesWithGPT(diffs) {
+  if (!OPENAI_API_KEY) {
+    console.log('\n⚠️  OPENAI_API_KEY or GITHUB_COPILOT_API_KEY not set. Using rule-based analysis instead.\n');
     return analyzeChangesRuleBased(diffs);
   }
 
@@ -144,40 +145,50 @@ Analyze these changes and respond with ONLY a JSON object in this format:
 }`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': CLAUDE_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1024,
-        messages: [{
-          role: 'user',
-          content: prompt
-        }]
+        model: OPENAI_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a semantic versioning expert. Always respond with valid JSON only.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        response_format: { type: 'json_object' },
+        temperature: 0.3,
+        max_tokens: 1000
       })
     });
 
     if (!response.ok) {
-      throw new Error(`Claude API error: ${response.statusText}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(`OpenAI API error: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
     }
 
     const data = await response.json();
-    const content = data.content[0].text;
+    const content = data.choices[0].message.content;
 
-    // Extract JSON from response
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
+    // Parse JSON response
+    const result = JSON.parse(content);
+
+    // Validate response structure
+    if (!result.bump || !result.reasoning || !result.changes_summary) {
+      throw new Error('Invalid response structure from GPT');
     }
 
-    throw new Error('Could not parse Claude response');
+    return result;
 
   } catch (error) {
-    console.log(`\n⚠️  Claude API error: ${error.message}. Using rule-based analysis.\n`);
+    console.log(`\n⚠️  GPT API error: ${error.message}. Using rule-based analysis.\n`);
     return analyzeChangesRuleBased(diffs);
   }
 }
@@ -260,9 +271,9 @@ async function main() {
   diffs.forEach(d => console.log(`  - ${d.file}`));
   console.log();
 
-  // Analyze with Claude
-  console.log('🤖 Analyzing changes with AI...\n');
-  const analysis = await analyzeChangesWithClaude(diffs);
+  // Analyze with GPT
+  console.log('🤖 Analyzing changes with GPT...\n');
+  const analysis = await analyzeChangesWithGPT(diffs);
 
   // Display results
   console.log('=' .repeat(60));
@@ -340,4 +351,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { analyzeChangesWithClaude, bumpVersion };
+module.exports = { analyzeChangesWithGPT, bumpVersion };
