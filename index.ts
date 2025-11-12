@@ -90,10 +90,27 @@ async function main(outputZipFile: string) {
   }
 }
 
+function printUsage() {
+  console.log('Meme Extraction Agent');
+  console.log('\nUsage: bun run index.ts <output-zip-file>');
+  console.log('\nOptions:');
+  console.log('  --help, -h    Show this help message and exit');
+}
+
 if (require.main === module) {
-  const outputZipFile = process.argv[2];
+  const args = process.argv.slice(2);
+
+  if (args.includes('--help') || args.includes('-h')) {
+    printUsage();
+    process.exit(0);
+  }
+
+  const outputZipFile = args[0];
+
   if (!outputZipFile) {
-    console.error('Usage: bun run index.ts <output-zip-file>');
+    console.error('Error: Output file must be specified.');
+    console.log('');
+    printUsage();
     process.exit(1);
   }
 

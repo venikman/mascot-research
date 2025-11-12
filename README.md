@@ -28,6 +28,12 @@ Run the agent from the command line, providing the desired name for the output z
 bun run index.ts <output-zip-file>
 ```
 
+To see the full list of options, run the script with the `--help` flag:
+
+```bash
+bun run index.ts --help
+```
+
 **Example:**
 
 ```bash
