@@ -2,7 +2,7 @@
 /**
  * Release Diff Utility
  *
- * Shows differences between two release versions of the meme method.
+ * Shows differences between two release versions of the meme methodology.
  *
  * Usage: node scripts/diff-releases.js <version1> <version2>
  * Example: node scripts/diff-releases.js 1.0.0 1.1.0
@@ -25,15 +25,29 @@ function loadRelease(version) {
 
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
-  // Load all meme JSON files
-  const memes = {};
-  manifest.files.forEach(filename => {
-    const filepath = path.join(releaseDir, filename);
-    const memeId = filename.split('_')[0];
-    memes[memeId] = JSON.parse(fs.readFileSync(filepath, 'utf8'));
-  });
+  // Load methodology docs
+  const methodologyDir = path.join(releaseDir, 'methodology');
+  const methodologyDocs = {};
+  if (fs.existsSync(methodologyDir)) {
+    fs.readdirSync(methodologyDir).forEach(filename => {
+      const filepath = path.join(methodologyDir, filename);
+      methodologyDocs[filename] = fs.readFileSync(filepath, 'utf8');
+    });
+  }
 
-  return { manifest, memes };
+  // Load example templates
+  const examplesDir = path.join(releaseDir, 'examples');
+  const examples = {};
+  if (fs.existsSync(examplesDir)) {
+    fs.readdirSync(examplesDir)
+      .filter(f => f.endsWith('.json'))
+      .forEach(filename => {
+        const filepath = path.join(examplesDir, filename);
+        examples[filename] = JSON.parse(fs.readFileSync(filepath, 'utf8'));
+      });
+  }
+
+  return { manifest, methodologyDocs, examples };
 }
 
 function compareManifests(v1, v2) {
@@ -41,61 +55,122 @@ function compareManifests(v1, v2) {
   console.log(`Version:        ${v1.manifest.version} → ${v2.manifest.version}`);
   console.log(`Release Date:   ${v1.manifest.release_date} → ${v2.manifest.release_date}`);
   console.log(`Method Version: ${v1.manifest.method_version} → ${v2.manifest.method_version}`);
-  console.log(`Spec Version:   ${v1.manifest.spec_version} → ${v2.manifest.spec_version}`);
-  console.log(`Total Memes:    ${v1.manifest.total_memes} → ${v2.manifest.total_memes}`);
 
-  const diff = v2.manifest.total_memes - v1.manifest.total_memes;
-  if (diff > 0) {
-    console.log(`                (+${diff} new memes)`);
-  } else if (diff < 0) {
-    console.log(`                (${diff} memes removed)`);
+  const docs1 = v1.manifest.contents.methodology_docs.length;
+  const docs2 = v2.manifest.contents.methodology_docs.length;
+  console.log(`Methodology Docs: ${docs1} → ${docs2}`);
+
+  const examples1 = v1.manifest.contents.example_templates;
+  const examples2 = v2.manifest.contents.example_templates;
+  console.log(`Example Templates: ${examples1} → ${examples2}`);
+
+  const docsDiff = docs2 - docs1;
+  if (docsDiff > 0) {
+    console.log(`                  (+${docsDiff} new docs)`);
+  } else if (docsDiff < 0) {
+    console.log(`                  (${docsDiff} docs removed)`);
+  }
+
+  const examplesDiff = examples2 - examples1;
+  if (examplesDiff > 0) {
+    console.log(`                  (+${examplesDiff} new examples)`);
+  } else if (examplesDiff < 0) {
+    console.log(`                  (${examplesDiff} examples removed)`);
   }
 }
 
-function compareMemes(v1, v2) {
-  console.log('\n📊 MEME COMPARISON\n');
+function compareMethodologyDocs(v1, v2) {
+  console.log('\n📚 METHODOLOGY DOCUMENTATION\n');
 
-  const v1Ids = new Set(Object.keys(v1.memes));
-  const v2Ids = new Set(Object.keys(v2.memes));
+  const v1Docs = new Set(Object.keys(v1.methodologyDocs));
+  const v2Docs = new Set(Object.keys(v2.methodologyDocs));
 
-  // New memes
-  const newMemes = [...v2Ids].filter(id => !v1Ids.has(id));
-  if (newMemes.length > 0) {
-    console.log(`✨ New Memes (${newMemes.length}):`);
-    newMemes.forEach(id => {
-      const meme = v2.memes[id];
-      console.log(`   + ${id}: ${meme.final_model.title}`);
-    });
+  // New docs
+  const newDocs = [...v2Docs].filter(doc => !v1Docs.has(doc));
+  if (newDocs.length > 0) {
+    console.log(`✨ New Documents (${newDocs.length}):`);
+    newDocs.forEach(doc => console.log(`   + ${doc}`));
     console.log();
   }
 
-  // Removed memes
-  const removedMemes = [...v1Ids].filter(id => !v2Ids.has(id));
-  if (removedMemes.length > 0) {
-    console.log(`🗑️  Removed Memes (${removedMemes.length}):`);
-    removedMemes.forEach(id => {
-      const meme = v1.memes[id];
-      console.log(`   - ${id}: ${meme.final_model.title}`);
-    });
+  // Removed docs
+  const removedDocs = [...v1Docs].filter(doc => !v2Docs.has(doc));
+  if (removedDocs.length > 0) {
+    console.log(`🗑️  Removed Documents (${removedDocs.length}):`);
+    removedDocs.forEach(doc => console.log(`   - ${doc}`));
     console.log();
   }
 
-  // Modified memes
-  const commonIds = [...v1Ids].filter(id => v2Ids.has(id));
-  const modified = [];
-
-  commonIds.forEach(id => {
-    const changes = findChanges(v1.memes[id], v2.memes[id]);
-    if (changes.length > 0) {
-      modified.push({ id, changes });
-    }
+  // Modified docs
+  const commonDocs = [...v1Docs].filter(doc => v2Docs.has(doc));
+  const modifiedDocs = commonDocs.filter(doc => {
+    return v1.methodologyDocs[doc] !== v2.methodologyDocs[doc];
   });
 
-  if (modified.length > 0) {
-    console.log(`🔄 Modified Memes (${modified.length}):\n`);
-    modified.forEach(({ id, changes }) => {
-      const meme = v2.memes[id];
-      console.log(`   ${id}: ${meme.final_model.title}`);
+  if (modifiedDocs.length > 0) {
+    console.log(`🔄 Modified Documents (${modifiedDocs.length}):\n`);
+    modifiedDocs.forEach(doc => {
+      const v1Lines = v1.methodologyDocs[doc].split('\n').length;
+      const v2Lines = v2.methodologyDocs[doc].split('\n').length;
+      const lineDiff = v2Lines - v1Lines;
+      const diffStr = lineDiff > 0 ? `+${lineDiff}` : lineDiff;
+      console.log(`   ${doc}`);
+      console.log(`      • Lines: ${v1Lines} → ${v2Lines} (${diffStr})`);
+    });
+    console.log();
+  }
+
+  // Unchanged docs
+  const unchanged = commonDocs.length - modifiedDocs.length;
+  if (unchanged > 0) {
+    console.log(`✓ Unchanged: ${unchanged} documents`);
+  }
+}
+
+function compareExamples(v1, v2) {
+  console.log('\n📊 EXAMPLE TEMPLATES\n');
+
+  const v1Examples = new Set(Object.keys(v1.examples));
+  const v2Examples = new Set(Object.keys(v2.examples));
+
+  // New examples
+  const newExamples = [...v2Examples].filter(ex => !v1Examples.has(ex));
+  if (newExamples.length > 0) {
+    console.log(`✨ New Examples (${newExamples.length}):`);
+    newExamples.forEach(ex => {
+      const example = v2.examples[ex];
+      console.log(`   + ${ex}`);
+      console.log(`      • ${example.final_model.title}`);
+    });
+    console.log();
+  }
+
+  // Removed examples
+  const removedExamples = [...v1Examples].filter(ex => !v2Examples.has(ex));
+  if (removedExamples.length > 0) {
+    console.log(`🗑️  Removed Examples (${removedExamples.length}):`);
+    removedExamples.forEach(ex => {
+      const example = v1.examples[ex];
+      console.log(`   - ${ex}`);
+      console.log(`      • ${example.final_model.title}`);
+    });
+    console.log();
+  }
+
+  // Modified examples
+  const commonExamples = [...v1Examples].filter(ex => v2Examples.has(ex));
+  const modifiedExamples = commonExamples.filter(ex => {
+    return JSON.stringify(v1.examples[ex]) !== JSON.stringify(v2.examples[ex]);
+  });
+
+  if (modifiedExamples.length > 0) {
+    console.log(`🔄 Modified Examples (${modifiedExamples.length}):\n`);
+    modifiedExamples.forEach(ex => {
+      const v1Ex = v1.examples[ex];
+      const v2Ex = v2.examples[ex];
+      const changes = findExampleChanges(v1Ex, v2Ex);
+
+      console.log(`   ${ex}`);
       changes.forEach(change => {
         console.log(`      • ${change}`);
       });
@@ -103,55 +178,39 @@ function compareMemes(v1, v2) {
     });
   }
 
-  // Unchanged memes
-  const unchanged = commonIds.length - modified.length;
+  // Unchanged examples
+  const unchanged = commonExamples.length - modifiedExamples.length;
   if (unchanged > 0) {
-    console.log(`✓ Unchanged: ${unchanged} memes`);
+    console.log(`✓ Unchanged: ${unchanged} examples`);
   }
 }
 
-function findChanges(old, updated) {
+function findExampleChanges(oldEx, newEx) {
   const changes = [];
 
   // Check title
-  if (old.final_model.title !== updated.final_model.title) {
-    changes.push(`Title: "${old.final_model.title}" → "${updated.final_model.title}"`);
+  if (oldEx.final_model.title !== newEx.final_model.title) {
+    changes.push(`Title: "${oldEx.final_model.title}" → "${newEx.final_model.title}"`);
   }
 
   // Check mode
-  if (old.final_model.mode !== updated.final_model.mode) {
-    changes.push(`Mode: ${old.final_model.mode} → ${updated.final_model.mode}`);
+  if (oldEx.final_model.mode !== newEx.final_model.mode) {
+    changes.push(`Mode: ${oldEx.final_model.mode} → ${newEx.final_model.mode}`);
   }
 
-  // Check hook/claim
-  if (old.final_model.meaning.claim_short !== updated.final_model.meaning.claim_short) {
-    changes.push(`Hook: "${old.final_model.meaning.claim_short}" → "${updated.final_model.meaning.claim_short}"`);
+  // Check hook
+  if (oldEx.final_model.meaning.claim_short !== newEx.final_model.meaning.claim_short) {
+    changes.push(`Hook: "${oldEx.final_model.meaning.claim_short}" → "${newEx.final_model.meaning.claim_short}"`);
   }
 
-  // Check metrics
-  if (old._metadata && updated._metadata) {
-    const oldMetrics = old._metadata.metrics;
-    const newMetrics = updated._metadata.metrics;
-
-    ['recognizability', 'fidelity', 'diversity', 'affect', 'risk'].forEach(metric => {
-      if (oldMetrics[metric] !== newMetrics[metric]) {
-        changes.push(`Metric ${metric}: ${oldMetrics[metric]} → ${newMetrics[metric]}`);
-      }
-    });
-
-    if (oldMetrics.popularity !== newMetrics.popularity) {
-      changes.push(`Popularity: ${oldMetrics.popularity} → ${newMetrics.popularity} hits`);
-    }
+  // Check platform
+  if (oldEx.final_model.bc.platform !== newEx.final_model.bc.platform) {
+    changes.push(`Platform: ${oldEx.final_model.bc.platform} → ${newEx.final_model.bc.platform}`);
   }
 
-  // Check form/layout changes
-  if (JSON.stringify(old.final_model.form.palette) !== JSON.stringify(updated.final_model.form.palette)) {
+  // Check palette
+  if (JSON.stringify(oldEx.final_model.form.palette) !== JSON.stringify(newEx.final_model.form.palette)) {
     changes.push(`Palette updated`);
-  }
-
-  // Check export format
-  if (old.representation.export.format !== updated.representation.export.format) {
-    changes.push(`Export format: ${old.representation.export.format} → ${updated.representation.export.format}`);
   }
 
   return changes;
@@ -162,24 +221,40 @@ function showSummary(v1, v2) {
   console.log('📈 SUMMARY');
   console.log('='.repeat(60));
 
-  const v1Ids = new Set(Object.keys(v1.memes));
-  const v2Ids = new Set(Object.keys(v2.memes));
+  const v1Docs = new Set(Object.keys(v1.methodologyDocs));
+  const v2Docs = new Set(Object.keys(v2.methodologyDocs));
+  const docsAdded = [...v2Docs].filter(doc => !v1Docs.has(doc)).length;
+  const docsRemoved = [...v1Docs].filter(doc => !v2Docs.has(doc)).length;
+  const commonDocs = [...v1Docs].filter(doc => v2Docs.has(doc));
+  const docsModified = commonDocs.filter(doc => v1.methodologyDocs[doc] !== v2.methodologyDocs[doc]).length;
+  const docsUnchanged = commonDocs.length - docsModified;
 
-  const added = [...v2Ids].filter(id => !v1Ids.has(id)).length;
-  const removed = [...v1Ids].filter(id => !v2Ids.has(id)).length;
-  const commonIds = [...v1Ids].filter(id => v2Ids.has(id));
-  const modified = commonIds.filter(id => {
-    return findChanges(v1.memes[id], v2.memes[id]).length > 0;
-  }).length;
-  const unchanged = commonIds.length - modified;
+  const v1Examples = new Set(Object.keys(v1.examples));
+  const v2Examples = new Set(Object.keys(v2.examples));
+  const examplesAdded = [...v2Examples].filter(ex => !v1Examples.has(ex)).length;
+  const examplesRemoved = [...v1Examples].filter(ex => !v2Examples.has(ex)).length;
+  const commonExamples = [...v1Examples].filter(ex => v2Examples.has(ex));
+  const examplesModified = commonExamples.filter(ex =>
+    JSON.stringify(v1.examples[ex]) !== JSON.stringify(v2.examples[ex])
+  ).length;
+  const examplesUnchanged = commonExamples.length - examplesModified;
 
-  console.log(`Total in v${v1.manifest.version}: ${v1Ids.size} memes`);
-  console.log(`Total in v${v2.manifest.version}: ${v2Ids.size} memes`);
-  console.log();
-  console.log(`Added:     ${added}`);
-  console.log(`Removed:   ${removed}`);
-  console.log(`Modified:  ${modified}`);
-  console.log(`Unchanged: ${unchanged}`);
+  console.log(`\nMethodology Documentation:`);
+  console.log(`  Total in v${v1.manifest.version}: ${v1Docs.size} docs`);
+  console.log(`  Total in v${v2.manifest.version}: ${v2Docs.size} docs`);
+  console.log(`  Added:     ${docsAdded}`);
+  console.log(`  Removed:   ${docsRemoved}`);
+  console.log(`  Modified:  ${docsModified}`);
+  console.log(`  Unchanged: ${docsUnchanged}`);
+
+  console.log(`\nExample Templates:`);
+  console.log(`  Total in v${v1.manifest.version}: ${v1Examples.size} examples`);
+  console.log(`  Total in v${v2.manifest.version}: ${v2Examples.size} examples`);
+  console.log(`  Added:     ${examplesAdded}`);
+  console.log(`  Removed:   ${examplesRemoved}`);
+  console.log(`  Modified:  ${examplesModified}`);
+  console.log(`  Unchanged: ${examplesUnchanged}`);
+
   console.log('='.repeat(60));
 }
 
@@ -201,7 +276,8 @@ function main() {
     const v2 = loadRelease(version2);
 
     compareManifests(v1, v2);
-    compareMemes(v1, v2);
+    compareMethodologyDocs(v1, v2);
+    compareExamples(v1, v2);
     showSummary(v1, v2);
 
   } catch (error) {
@@ -214,4 +290,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { loadRelease, findChanges, compareMemes };
+module.exports = { loadRelease, findExampleChanges, compareMethodologyDocs };

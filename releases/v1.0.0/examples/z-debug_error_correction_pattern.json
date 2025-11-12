@@ -1,11 +1,11 @@
 {
   "final_model": {
-    "title": "Challenge Inner Zombie Autopilot",
+    "title": "Error Correction Pattern",
     "mode": "M-2",
     "edition": "2025-11-12",
     "bc": {
-      "platform": "Instagram+Reels",
-      "culture": "SystemsWorld",
+      "platform": "Instagram",
+      "culture": "systems-thinking-community",
       "language": "en",
       "source_url": "https://github.com/venikman/mascot-research"
     },
@@ -16,7 +16,7 @@
         1350
       ],
       "padding_px": 64,
-      "style": "flat",
+      "style": "flat-minimal",
       "palette": {
         "ink": "#111111",
         "paper": "#FFFFFF",
@@ -62,54 +62,54 @@
         }
       }
     },
-    "stance": "Systematic, disciplined approach to skill building",
+    "stance": "Earnest and supportive; growth-oriented",
     "meaning": {
-      "claim_short": "Question the autopilot.",
+      "claim_short": "Test ideas, not vibes",
       "reasons": [
-        "The core behavioral pattern in this meme focuses on building self-discipline and self-control by critically analyzing personal illusions of consciousness, inspired by the concept of philosophical zombies that mimic awareness without true sentience.",
-        "It teaches individuals, particularly students, to identify and challenge their automatic 'autopilot' behaviors and beliefs, using tools like verifying explanations to counteract external influences such as marketing.",
-        "By emphasizing personal interpretations and self-critique, the pattern promotes greater autonomy over one's actions and resistance to manipulative forces."
+        "Supports sustainable learning habits",
+        "Reduces cognitive load through systematic approach",
+        "Builds long-term capability through regular practice"
       ],
-      "falsifier": "If practice does not lead to observable improvement over time.",
+      "falsifier": "If practice does not lead to observable improvement over consistent time period",
       "roles": {
         "A": "Learner seeking growth",
-        "B": "Educational system/mentor"
+        "B": "Educational context/system"
       }
     },
     "policy": {
-      "copying_rules": "Must preserve core behavior pattern and metrics framework",
-      "rationality": "Empirically validated through MemeMeter_v1 metrics",
+      "copying_rules": "Must preserve core behavior pattern and educational value",
+      "rationality": "Evidence-based learning principles",
       "identity": {
         "must_stay": [
           "core_behavior_pattern",
-          "metrics_framework",
-          "educational_context"
+          "educational_stance",
+          "growth_orientation"
         ],
         "may_change": [
           "visual_style",
           "language",
-          "platform"
+          "platform_specifics"
         ]
       },
       "invariants": [
-        "Behavior pattern must remain recognizable (ρ >= 0.70)",
-        "Educational value must be maintained",
-        "No outcome promises allowed"
+        "Behavior pattern must remain clear and recognizable",
+        "Educational value must be preserved",
+        "Growth mindset must be maintained"
       ],
       "allowed_mutations": [
         "Translate to different languages",
-        "Adapt visual format to platform",
+        "Adapt visual format to platform constraints",
         "Adjust examples to cultural context"
       ],
       "bridge": {
-        "en_ru": "Preserve systems-thinking terminology",
-        "cultures": "Maintain educational community values"
+        "en_ru": "Preserve systems-thinking terminology and learning concepts",
+        "cultures": "Maintain universal learning principles while adapting examples"
       }
     }
   },
   "representation": {
     "meta": {
-      "meme_id": "m11",
+      "meme_id": "example_debug",
       "media_type": "image",
       "platform": "Instagram",
       "export_date": "2025-11-12"
@@ -133,9 +133,9 @@
       }
     },
     "content": {
-      "headline": "Question the autopilot.",
-      "slot_A": "Before state visualization",
-      "slot_B": "After state visualization",
+      "headline": "Test ideas, not vibes",
+      "slot_A": "Visual representation of current state",
+      "slot_B": "Visual representation of desired state",
       "slot_C": null,
       "narration": null
     },
@@ -144,20 +144,19 @@
         "ink": "#111111",
         "paper": "#FFFFFF",
         "accentA": "#FF6A00",
-        "accentB": "#3178C6",
-        "calm": "#10B981",
-        "warn": "#D61F1F"
+        "accentB": "#3178C6"
       },
       "contrast_threshold": 4.5,
       "stance_parity": true,
       "glyphs": [
-        "Stepper mascot",
-        "Progress indicators"
+        "Mascot character",
+        "Progress indicators",
+        "Learning symbols"
       ]
     },
     "accessibility": {
-      "alt": "Challenge Inner Zombie Autopilot: Question the autopilot.",
-      "caption": "The core behavioral pattern in this meme focuses on building self-discipline and self-control by critically analyzing personal illusions of consciousness, inspired by the concept of philosophical zomb...",
+      "alt": "Error Correction Pattern: Test ideas, not vibes. A pattern for systematic error identification and correction",
+      "caption": "A pattern for systematic error identification and correction",
       "lang": "en"
     },
     "lint": {
@@ -180,13 +179,7 @@
     "version": "1.0.0",
     "method_version": "1.0.0",
     "generator": "mascot-research/scripts/generate-release.js",
-    "metrics": {
-      "recognizability": 0.7,
-      "fidelity": 0.4635,
-      "diversity": 1.5,
-      "affect": 0.8,
-      "risk": 0
-    },
-    "popularity": 21
+    "template": "Z-DEBUG",
+    "example": true
   }
 }

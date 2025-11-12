@@ -1,20 +1,20 @@
 # Release Process
 
-This document describes how to create and manage release versions of the Meme Mining, Modeling, and Representation method.
+This document describes how to create and manage release versions of the Meme Mining, Modeling, and Representation methodology.
 
 ## Overview
 
-The release system generates JSON files conforming to the [cass meme.schema.json](https://github.com/venikman/cass/blob/main/memes/schema/meme.schema.json) format. Each release includes:
+The release system generates versioned packages containing:
 
-- **Versioned meme definitions** in JSON format
+- **Methodology documentation** (Meme.Mining.md, Meme.Modeling.md, etc.)
+- **Example JSON templates** conforming to [cass meme.schema.json](https://github.com/venikman/cass/blob/main/memes/schema/meme.schema.json)
 - **Manifest file** with release metadata
-- **Compatibility** with the cass frontend application
 
 ## Version Management
 
 ### Current Version
 
-The current version is stored in `VERSION` file at the root of the repository:
+The current version is stored in `VERSION` file at the root:
 
 ```bash
 cat VERSION
@@ -25,15 +25,15 @@ cat VERSION
 
 We follow [Semantic Versioning](https://semver.org/):
 
-- **MAJOR** (1.x.x): Breaking changes to the method or schema compatibility
-- **MINOR** (x.1.x): New memes added, non-breaking enhancements
-- **PATCH** (x.x.1): Bug fixes, typos, minor corrections
+- **MAJOR** (1.x.x): Breaking changes to the methodology or schema compatibility
+- **MINOR** (x.1.x): New methodology sections, additional examples
+- **PATCH** (x.x.1): Bug fixes, typos, minor corrections to docs
 
 ## Creating a Release
 
 ### 1. Update Version
 
-Edit the `VERSION` file with the new version number:
+Edit the `VERSION` file:
 
 ```bash
 echo "1.1.0" > VERSION
@@ -41,21 +41,17 @@ echo "1.1.0" > VERSION
 
 ### 2. Update CHANGELOG
 
-Add an entry to `CHANGELOG.md` documenting what changed:
+Add an entry to `CHANGELOG.md`:
 
 ```markdown
 ## [1.1.0] - 2025-11-15
 
 ### Added
-- 3 new memes for collaboration patterns
-- Enhanced metrics for team dynamics
+- New example template for DECOMPOSE pattern
+- Additional documentation for bridge notes
 
 ### Changed
-- Updated visual format for REFLECT template
-- Improved description clarity for existing memes
-
-### Fixed
-- Corrected metrics calculation for diversity (H)
+- Clarified stance definition in Meme.Meaning.md
 ```
 
 ### 3. Generate Release
@@ -64,14 +60,16 @@ Run the release generation script:
 
 ```bash
 node scripts/generate-release.js
+# or use npm script:
+npm run release
 ```
 
 This will:
 - Read the current `VERSION` file
-- Parse `Methods/GPTv2/Memes.md` for meme data
-- Load `Testing/GPT/spec.json` for templates
-- Generate JSON files in `releases/v{VERSION}/`
+- Copy methodology documentation files
+- Generate example JSON templates
 - Create a `manifest.json` with metadata
+- Create a `README.md` for the release
 
 ### 4. Review Output
 
@@ -80,16 +78,16 @@ Check the generated files:
 ```bash
 ls -la releases/v1.0.0/
 # Output:
-# m1_Reflective_Intrinsic_Motivation_Shift.json
-# m2_Incremental_Progress_Reflection.json
-# ...
-# manifest.json
+# methodology/         - Documentation files
+# examples/            - Example JSON templates
+# manifest.json        - Release metadata
+# README.md            - Release documentation
 ```
 
-Inspect a sample meme file:
+Inspect an example template:
 
 ```bash
-cat releases/v1.0.0/m1_Reflective_Intrinsic_Motivation_Shift.json
+cat releases/v1.0.0/examples/reflect_reflective_learning_pattern.json
 ```
 
 ### 5. Create Git Tag
@@ -103,18 +101,19 @@ git push origin v1.0.0
 
 ## Comparing Releases
 
-To see differences between two versions:
+To see differences ("iff") between two versions:
 
 ```bash
 node scripts/diff-releases.js 1.0.0 1.1.0
+# or use npm script:
+npm run diff 1.0.0 1.1.0
 ```
 
 This will show:
 
-- **Manifest comparison**: Version changes, meme count differences
-- **New memes**: Memes added in the newer version
-- **Removed memes**: Memes removed from the older version
-- **Modified memes**: Changes to existing memes (title, metrics, hooks, etc.)
+- **Manifest comparison**: Version changes, doc counts, example counts
+- **Methodology docs**: New, removed, or modified documentation
+- **Example templates**: New, removed, or modified examples
 - **Summary statistics**: Overall change count
 
 ### Example Output
@@ -124,59 +123,69 @@ This will show:
 
 📋 MANIFEST COMPARISON
 
-Version:        1.0.0 → 1.1.0
-Release Date:   2025-11-12 → 2025-11-15
-Method Version: 1.0.0 → 1.0.0
-Spec Version:   1.0.0 → 1.0.0
-Total Memes:    16 → 19
-                (+3 new memes)
+Version:          1.0.0 → 1.1.0
+Release Date:     2025-11-12 → 2025-11-15
+Method Version:   1.0.0 → 1.0.0
+Methodology Docs: 5 → 5
+Example Templates: 3 → 4
+                  (+1 new examples)
 
-📊 MEME COMPARISON
+📚 METHODOLOGY DOCUMENTATION
 
-✨ New Memes (3):
-   + m21: Collaborative Systems Thinking
-   + m22: Peer Review Discipline
-   + m23: Knowledge Sharing Habit
+🔄 Modified Documents (1):
 
-🔄 Modified Memes (2):
+   Meme.Meaning.md
+      • Lines: 50 → 55 (+5)
 
-   m1: Reflective Intrinsic Motivation Shift
-      • Metric diversity: 0 → 0.5
-      • Popularity: 69 → 72 hits
+📊 EXAMPLE TEMPLATES
 
-   m3: Exorcising Zombie Ideas
-      • Hook: "Test ideas. Not vibes." → "Test ideas rigorously."
+✨ New Examples (1):
+   + decompose_systems_analysis_pattern.json
+      • Systems Analysis Pattern
 
-✓ Unchanged: 13 memes
+✓ Unchanged: 3 examples
 
 ============================================================
 📈 SUMMARY
 ============================================================
-Total in v1.0.0: 16 memes
-Total in v1.1.0: 19 memes
 
-Added:     3
-Removed:   0
-Modified:  2
-Unchanged: 13
+Methodology Documentation:
+  Total in v1.0.0: 5 docs
+  Total in v1.1.0: 5 docs
+  Added:     0
+  Removed:   0
+  Modified:  1
+  Unchanged: 4
+
+Example Templates:
+  Total in v1.0.0: 3 examples
+  Total in v1.1.0: 4 examples
+  Added:     1
+  Removed:   0
+  Modified:  0
+  Unchanged: 3
 ============================================================
 ```
 
 ## Release Structure
 
-Each release is stored in `releases/v{VERSION}/` with the following structure:
+Each release is stored in `releases/v{VERSION}/`:
 
 ```
 releases/
 ├── v1.0.0/
-│   ├── m1_Reflective_Intrinsic_Motivation_Shift.json
-│   ├── m2_Incremental_Progress_Reflection.json
-│   ├── ...
-│   └── manifest.json
-└── v1.1.0/
-    ├── m1_Reflective_Intrinsic_Motivation_Shift.json
-    ├── ...
-    └── manifest.json
+│   ├── methodology/
+│   │   ├── Meme.Mining.md
+│   │   ├── Meme.Modeling.md
+│   │   ├── Meme.Meaning.md
+│   │   ├── Meme.Representation.md
+│   │   └── Instuction.md
+│   ├── examples/
+│   │   ├── reflect_reflective_learning_pattern.json
+│   │   ├── steps_incremental_progress_pattern.json
+│   │   └── z-debug_error_correction_pattern.json
+│   ├── manifest.json
+│   └── README.md
 ```
 
 ### Manifest Schema
@@ -186,99 +195,89 @@ releases/
   "version": "1.0.0",
   "release_date": "2025-11-12",
   "method_version": "1.0.0",
-  "spec_version": "1.0.0",
-  "total_memes": 16,
+  "description": "Meme Mining, Modeling, and Representation Methodology",
   "compatible_with": "cass/meme.schema.json",
-  "metrics_framework": "MemeMeter_v1",
-  "files": [
-    "m1_Reflective_Intrinsic_Motivation_Shift.json",
-    "..."
-  ]
+  "contents": {
+    "methodology_docs": ["Meme.Mining.md", ...],
+    "example_templates": 3,
+    "example_files": ["reflect_reflective_learning_pattern.json", ...]
+  },
+  "usage": "Use methodology docs to create memes, then generate JSON following example templates",
+  "repository": "https://github.com/venikman/mascot-research"
 }
 ```
 
-### Meme JSON Schema
+### Example JSON Structure
 
-Each meme JSON file contains two main sections:
+Each example template contains:
 
 #### 1. `final_model` (Conceptual Definition)
 
 - **title**: Meme name
-- **mode**: M-0 to M-3 based on fidelity metric
+- **mode**: M-0 to M-3 based on formality level
 - **edition**: Release date
 - **bc**: Broadcasting context (platform, culture, language)
 - **form**: Visual layout specifications
-- **stance**: Philosophical position
+- **stance**: Communicative attitude
 - **meaning**: Claim, reasons, falsifier, roles
-- **policy**: Copying rules, invariants, mutations, bridge notes
+- **policy**: Copying rules, invariants, mutations
 
 #### 2. `representation` (Concrete Instantiation)
 
 - **meta**: Meme ID, media type, platform, export date
-- **layout**: Image or multiform geometry
-- **content**: Headline, slots A/B/C, narration
-- **invariants**: Colors, contrast, glyphs
-- **accessibility**: Alt text, captions, language
+- **layout**: Geometry for image or multiform
+- **content**: Headline, slots A/B/C
+- **invariants**: Colors, contrast thresholds
+- **accessibility**: Alt text, captions
 - **lint**: Validation checks
 - **export**: Format, resolution
 
-#### 3. `_metadata` (Internal Tracking)
+#### 3. `_metadata` (Version Tracking)
 
 - **version**: Release version
-- **method_version**: Method framework version
+- **method_version**: Methodology version
 - **generator**: Script that generated the file
-- **metrics**: MemeMeter_v1 metrics (ρ, φ, H, A, R)
-- **popularity**: Hit count from corpus
+- **template**: Format used (REFLECT, STEPS, etc.)
+- **example**: Boolean flag indicating this is an example
 
 ## Integration with Cass
 
-The [cass repository](https://github.com/venikman/cass) expects these JSON files in its `memes/` directory structure:
+The [cass repository](https://github.com/venikman/cass) expects JSON files in its `memes/` directory:
 
 ```
 cass/memes/
 ├── schema/
 │   └── meme.schema.json
-├── Reflective_Intrinsic_Motivation_Shift/
-│   └── data.json  (copy from m1_*.json)
-├── Incremental_Progress_Reflection/
-│   └── data.json  (copy from m2_*.json)
-└── ...
+├── YourMemeName/
+│   └── data.json  (copy from examples/*.json)
 ```
 
 ### Deployment Workflow
 
 1. Generate release in mascot-research
-2. Copy JSON files to cass repository
-3. Organize by meme name into subdirectories
-4. Rename to `data.json` within each subdirectory
-5. Commit and deploy cass frontend
+2. Copy example JSON files to cass repository
+3. Rename and organize into subdirectories
+4. Create your own memes following the methodology
+5. Generate JSON files using examples as templates
 
 ## Scripts Reference
 
 ### `scripts/generate-release.js`
 
-**Purpose**: Generate versioned meme JSON files
+**Purpose**: Generate versioned methodology releases
 
 **Usage**:
 ```bash
 node scripts/generate-release.js [version]
+# or
+npm run release
 ```
-
-**Arguments**:
-- `version` (optional): Version number to use (default: reads from `VERSION` file)
 
 **Outputs**:
-- JSON files in `releases/v{VERSION}/`
-- `manifest.json` with release metadata
-
-**Example**:
-```bash
-# Use VERSION file
-node scripts/generate-release.js
-
-# Specify version explicitly
-node scripts/generate-release.js 1.1.0
-```
+- Methodology documentation in `methodology/`
+- Example JSON templates in `examples/`
+- `manifest.json` with metadata
+- `README.md` with usage instructions
 
 ### `scripts/diff-releases.js`
 
@@ -287,78 +286,74 @@ node scripts/generate-release.js 1.1.0
 **Usage**:
 ```bash
 node scripts/diff-releases.js <version1> <version2>
+# or
+npm run diff <version1> <version2>
 ```
-
-**Arguments**:
-- `version1`: First version to compare (e.g., "1.0.0")
-- `version2`: Second version to compare (e.g., "1.1.0")
 
 **Outputs**:
-- Console report showing differences
-
-**Example**:
-```bash
-node scripts/diff-releases.js 1.0.0 1.1.0
-```
+- Console report showing differences in docs and examples
 
 ## Best Practices
 
 ### Before Creating a Release
 
-1. **Review all changes**: Check git diff for modifications
-2. **Update documentation**: Ensure Memes.md reflects current state
-3. **Validate metrics**: Confirm MemeMeter_v1 metrics are accurate
-4. **Test spec.json**: Verify all template definitions are correct
-5. **Update CHANGELOG**: Document all changes clearly
+1. **Review methodology docs**: Ensure all .md files are current
+2. **Test examples**: Verify example templates match current methodology
+3. **Update CHANGELOG**: Document all changes clearly
+4. **Review schema**: Confirm compatibility with cass meme.schema.json
 
 ### Version Bumping Guidelines
 
-- **MAJOR**: Change when schema is incompatible with cass
-- **MINOR**: Add new memes or enhance existing ones non-destructively
-- **PATCH**: Fix typos, correct metrics, minor updates
+- **MAJOR**: Breaking changes to methodology or schema incompatibility
+- **MINOR**: New docs, additional examples, non-breaking enhancements
+- **PATCH**: Typos, clarifications, minor corrections
 
 ### Release Checklist
 
 - [ ] Update `VERSION` file
 - [ ] Update `CHANGELOG.md`
-- [ ] Run `node scripts/generate-release.js`
-- [ ] Review generated JSON files
-- [ ] Test with cass (if available)
+- [ ] Run `npm run release`
+- [ ] Review generated files
 - [ ] Commit changes
 - [ ] Create git tag
 - [ ] Push tag to remote
 
 ## Troubleshooting
 
-### No memes generated
+### Missing methodology docs
 
-**Symptom**: Script reports "Memes: 0"
+**Symptom**: Fewer than 5 docs in release
 
-**Cause**: Meme names in `spec.json` don't match names in `Memes.md`
+**Cause**: Documentation files moved or renamed
 
-**Fix**: Ensure exact name matching (case-sensitive)
+**Fix**: Ensure these files exist in repository root:
+- Meme.Mining.md
+- Meme.Modeling.md
+- Meme.Meaning.md
+- Meme.Representation.md
+- Instuction.md
 
-### Missing metrics
+### Example generation fails
 
-**Symptom**: JSON files have null or undefined metrics
+**Symptom**: No example JSON files created
 
-**Cause**: Metrics not found in `Memes.md`
+**Cause**: Script error or missing dependencies
 
-**Fix**: Verify `Memes.md` has complete metrics for each meme:
-```markdown
-**Metrics**: ρ=0.85, φ=0.5157, H=0, A=0.95, R=0
+**Fix**: Check Node.js version (requires >=14.0.0):
+```bash
+node --version
 ```
 
 ### Version mismatch
 
 **Symptom**: Release version doesn't match `VERSION` file
 
-**Cause**: Cached data or wrong argument
+**Cause**: Cached data or incorrect argument
 
 **Fix**: Delete `releases/` and regenerate:
 ```bash
 rm -rf releases/
-node scripts/generate-release.js
+npm run release
 ```
 
 ## Contact
