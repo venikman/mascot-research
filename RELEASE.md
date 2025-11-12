@@ -29,7 +29,46 @@ We follow [Semantic Versioning](https://semver.org/):
 - **MINOR** (x.1.x): New methodology sections, additional examples
 - **PATCH** (x.x.1): Bug fixes, typos, minor corrections to docs
 
+### Auto-Versioning with AI
+
+**NEW**: You can use Claude AI to automatically analyze your changes and determine the appropriate version bump!
+
+```bash
+# Check what version bump is recommended
+npm run version:check
+
+# Apply the recommended version bump automatically
+npm run version:auto
+```
+
+See [AUTO-VERSION.md](AUTO-VERSION.md) for complete documentation on AI-powered versioning.
+
 ## Creating a Release
+
+### Option A: Auto-Version (Recommended)
+
+Let Claude AI analyze your changes and determine the version bump:
+
+```bash
+# 1. Make changes to methodology docs
+vim Meme.Mining.md
+
+# 2. Check recommended version bump
+npm run version:check
+
+# 3. Apply if you agree
+npm run version:auto
+
+# 4. Generate release
+npm run release
+
+# 5. Commit and tag
+git add . && git commit -m "Release v1.1.0"
+git tag -a v1.1.0 -m "Release v1.1.0"
+git push && git push --tags
+```
+
+### Option B: Manual Version Update
 
 ### 1. Update Version
 

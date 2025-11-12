@@ -7,6 +7,8 @@
     "release": "node scripts/generate-release.js",
     "release:version": "node scripts/generate-release.js",
     "diff": "node scripts/diff-releases.js",
+    "version:check": "node scripts/auto-version.js",
+    "version:auto": "node scripts/auto-version.js --apply",
     "version:bump": "npm version",
     "version:major": "npm version major && npm run release",
     "version:minor": "npm version minor && npm run release",
